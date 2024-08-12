@@ -8606,8 +8606,8 @@ memory usage: 148.4+ KB
     <span class="c1"># Combine counts and percentages into a DataFrame</span>
     <span class="n">combined_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">filter_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_counts"</span><span class="p">:</span> <span class="n">counts</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">filter_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">_percentage"</span><span class="p">:</span> <span class="n">percentages</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"count_</span><span class="si">{</span><span class="n">filter_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">:</span> <span class="n">counts</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"percentage_</span><span class="si">{</span><span class="n">filter_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">:</span> <span class="n">percentages</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
@@ -8675,6 +8675,123 @@ memory usage: 148.4+ KB
         <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">lL</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Function to convert metrics into a DataFrame</span>
+<span class="k">def</span> <span class="nf">metrics_to_dataframe</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Converts metric names, their associcated values, and units into a formatted DataFrame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kwargs: Variable number of keyword arguments where the key is the metric name</span>
+<span class="sd">                and the value is a tuple containing the associated value and the unit symbol.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: A DataFrame containing the metric names, their formatted values, and unit symbols.</span>
+<span class="sd">    """</span>
+    <span class="c1"># Create lists for metrics, values, and units</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">units</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+
+    <span class="c1"># Create DataFrame</span>
+    <span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">"metric"</span><span class="p">:</span> <span class="n">metrics</span><span class="p">,</span>
+            <span class="s2">"unit"</span><span class="p">:</span> <span class="n">units</span><span class="p">,</span>
+            <span class="s2">"value"</span><span class="p">:</span> <span class="n">values</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Function to calculate and style the top and bottom 5 restaurants based on a specified feature</span>
+<span class="k">def</span> <span class="nf">top_and_bottom_restaurants</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">filter_feature</span><span class="p">,</span> <span class="n">delivery_threshold</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Generate a styled DataFrame showing the top 5 and bottom 5 restaurants</span>
+<span class="sd">    based on the average of a specified feature, filtered by a minimum</span>
+<span class="sd">    number of deliveries.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    data (pd.DataFrame): The DataFrame containing restaurant data.</span>
+<span class="sd">    filter_feature (str): The feature to calculate the average for (e.g., 'order_completion_time').</span>
+<span class="sd">    delivery_threshold (int): The minimum number of deliveries required to be included (default is 10).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    styled_df (pd.io.formats.style.Styler): A styled DataFrame with top 5 and bottom 5 restaurants.</span>
+<span class="sd">    """</span>
+    <span class="c1"># Filter restaurants with more than the specified number of deliveries</span>
+    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"restaurant_name"</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">delivery_threshold</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Calculate the average order completion time</span>
+    <span class="n">average_time</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">filtered_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"restaurant_name"</span><span class="p">)[</span><span class="n">filter_feature</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Get the top 5 and last 5 restaurants</span>
+    <span class="n">top_5</span> <span class="o">=</span> <span class="n">average_time</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">last_5</span> <span class="o">=</span> <span class="n">average_time</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># Concatenate the top 5 and last 5 DataFrames</span>
+    <span class="n">average_time_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">top_5</span><span class="p">,</span> <span class="n">last_5</span><span class="p">])</span>
+
+    <span class="c1"># Rename columns</span>
+    <span class="n">average_time_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">filter_feature</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"average_</span><span class="si">{</span><span class="n">filter_feature</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Function to add a border to the bottom edge of the 5th row</span>
+    <span class="k">def</span> <span class="nf">add_upper_border</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">[</span><span class="s2">"border-bottom: 0.5px solid grey"</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="mi">4</span>
+            <span class="k">else</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Function to add a border to the bottom edge of the 5th row (index)</span>
+    <span class="k">def</span> <span class="nf">add_upper_border_index</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">"border-bottom: 0.5px solid grey"</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">""</span>
+
+    <span class="c1"># Apply styles to the DataFrame</span>
+    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">average_time_df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">add_upper_border</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">styled_df</span><span class="o">.</span><span class="n">applymap_index</span><span class="p">(</span><span class="n">add_upper_border_index</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">styled_df</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="sa">f</span><span class="s2">"average_</span><span class="si">{</span><span class="n">filter_feature</span><span class="si">}</span><span class="s2">"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{:.2f}</span><span class="s2">"</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">styled_df</span>
 </pre></div>
 </div>
 </div>
@@ -8844,78 +8961,6 @@ memory usage: 148.4+ KB
 
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Function to calculate and style the top and bottom 5 restaurants based on a specified feature</span>
-<span class="k">def</span> <span class="nf">top_and_bottom_restaurants</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">filter_feature</span><span class="p">,</span> <span class="n">delivery_threshold</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Generate a styled DataFrame showing the top 5 and bottom 5 restaurants</span>
-<span class="sd">    based on the average of a specified feature, filtered by a minimum</span>
-<span class="sd">    number of deliveries.</span>
-
-<span class="sd">    Parameters:</span>
-<span class="sd">    data (pd.DataFrame): The DataFrame containing restaurant data.</span>
-<span class="sd">    filter_feature (str): The feature to calculate the average for (e.g., 'order_completion_time').</span>
-<span class="sd">    delivery_threshold (int): The minimum number of deliveries required to be included (default is 10).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">    styled_df (pd.io.formats.style.Styler): A styled DataFrame with top 5 and bottom 5 restaurants.</span>
-<span class="sd">    """</span>
-    <span class="c1"># Filter restaurants with more than the specified number of deliveries</span>
-    <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"restaurant_name"</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">delivery_threshold</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Calculate the average order completion time</span>
-    <span class="n">average_time</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">filtered_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"restaurant_name"</span><span class="p">)[</span><span class="n">filter_feature</span><span class="p">]</span>
-        <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
-        <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Get the top 5 and last 5 restaurants</span>
-    <span class="n">top_5</span> <span class="o">=</span> <span class="n">average_time</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">last_5</span> <span class="o">=</span> <span class="n">average_time</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-    <span class="c1"># Concatenate the top 5 and last 5 DataFrames</span>
-    <span class="n">average_time_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">top_5</span><span class="p">,</span> <span class="n">last_5</span><span class="p">])</span>
-
-    <span class="c1"># Rename columns</span>
-    <span class="n">average_time_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">filter_feature</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"average_</span><span class="si">{</span><span class="n">filter_feature</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Function to add a border to the bottom edge of the 5th row</span>
-    <span class="k">def</span> <span class="nf">add_upper_border</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="p">[</span><span class="s2">"border-bottom: 0.5px solid grey"</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="mi">4</span>
-            <span class="k">else</span> <span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="c1"># Function to add a border to the bottom edge of the 5th row (index)</span>
-    <span class="k">def</span> <span class="nf">add_upper_border_index</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">"border-bottom: 0.5px solid grey"</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">""</span>
-
-    <span class="c1"># Apply styles to the DataFrame</span>
-    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">average_time_df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">add_upper_border</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">styled_df</span><span class="o">.</span><span class="n">applymap_index</span><span class="p">(</span><span class="n">add_upper_border_index</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">styled_df</span> <span class="o">=</span> <span class="n">styled_df</span><span class="o">.</span><span class="n">format</span><span class="p">({</span><span class="sa">f</span><span class="s2">"average_</span><span class="si">{</span><span class="n">filter_feature</span><span class="si">}</span><span class="s2">"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{:.2f}</span><span class="s2">"</span><span class="p">})</span>
-
-    <span class="k">return</span> <span class="n">styled_df</span>
 </pre></div>
 </div>
 </div>
@@ -9803,7 +9848,10 @@ memory usage: 148.4+ KB
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Percentages and counts of total orders for the 'rating' feature</span>
-<span class="n">fstats</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">"rating"</span><span class="p">)</span>
+<span class="n">rstats</span> <span class="o">=</span> <span class="n">fstats</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">"rating"</span><span class="p">)</span>
+
+<span class="c1"># Display DataFrame</span>
+<span class="n">rstats</span>
 </pre></div>
 </div>
 </div>
@@ -9894,6 +9942,24 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
 <img alt="No description has been provided for this image" class="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABVQAAAL8CAYAAAAP7D4pAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjkuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/TGe4hAAAACXBIWXMAAA9hAAAPYQGoP6dpAAB0s0lEQVR4nO3deZTedXn//+vOTDJZZ7JACGkCiWHfd74ICgJaEUWLVlFUkFILLgUVxbWAfm2gFbeiuFGFutBF4IelLiiCG2IgbGENS9hDFJKZ7MvM/fvDw3xNwfhJDLne8H48zsk5ZebOzCvJs0Ev77mn1W632wEAAAAAwJ80JHsAAAAAAMBzhYMqAAAAAEBDDqoAAAAAAA05qAIAAAAANOSgCgAAAADQkIMqAAAAAEBDDqoAAAAAAA05qAIAAAAANOSgCgAAAADQkIMqAEAlvvGNb0Sr1Rr8MXz48Jg0aVK85CUviZkzZ8aCBQue9nPOPPPMaLVa6/V5li1bFmeeeWZcffXV6/XznulzTZs2LV75yleu18f5U7797W/HZz/72Wd8X6vVijPPPHOjfr6N7Sc/+Unss88+MWrUqGi1WnHZZZc94+PmzZu31p/3kCFDYty4cXHYYYfFj370ow3+/M/13z8AgD+XgyoAQGW+/vWvx7XXXhtXXnllfOELX4g99tgjzjnnnNhxxx3jxz/+8VqPPfHEE+Paa69dr4+/bNmyOOuss9b7oLohn2tDrOsgeO2118aJJ574rG/YUO12O17/+tfH0KFD4/LLL49rr702Dj744HX+nHe/+91x7bXXxs9//vP41Kc+FXPnzo1XvOIV8bOf/WyDNjyXf/8AADaGzuwBAABsWrvsskvss88+g//82te+Nt7znvfEQQcdFEcffXTMnTs3tthii4iImDJlSkyZMuVZ3bNs2bIYOXLkJvlcf8r/+T//J/Xz/ymPPvpoPPnkk/FXf/VXcdhhhzX6OVtttdXgr+vAAw+MbbfdNg4++OC44IIL4sUvfvFG3Vf67x8AwMbgGaoAAMRWW20V5557bixevDi+/OUvD779mb4M/6qrropDDjkkJkyYECNGjIitttoqXvva18ayZcti3rx5sfnmm0dExFlnnTX45ebHH3/8Wh9v9uzZ8brXvS7GjRsXM2bM+KOf6ymXXnpp7LbbbjF8+PB4wQteEJ///OfXev9TL2cwb968td5+9dVXR6vVGny27CGHHBJXXHFFPPDAA2t9OfxTnulL1ufMmROvfvWrY9y4cTF8+PDYY4894sILL3zGz/Od73wnPvKRj8TkyZOju7s7Dj/88Ljrrrv++G/8H/jFL34Rhx12WIwZMyZGjhwZL3zhC+OKK64YfP+ZZ545eHA+/fTTo9VqxbRp0xp97D/01DH98ccfX+vtX/jCF+LFL35xTJw4MUaNGhW77rpr/NM//VOsXr168DHr+/v31J/LT3/60zj55JNjs802iwkTJsTRRx8djz766Fqff+XKlfG+970vJk2aFCNHjowXv/jFccMNN8S0adMG+4n4/QH+tNNOi+nTp8fw4cNj/Pjxsc8++8R3vvOd9f69AADYEJ6hCgBARES84hWviI6OjnV+Kfi8efPiyCOPjBe96EXxr//6rzF27Nh45JFH4gc/+EGsWrUqttxyy/jBD34QL3/5y+Nv/uZvBr/8+6kj61OOPvroOOaYY+Kkk06KpUuXrnPXTTfdFKeeemqceeaZMWnSpPjWt74Vp5xySqxatSpOO+209fo1fvGLX4y3v/3tce+998all176Jx9/1113xQtf+MKYOHFifP7zn48JEybEN7/5zTj++OPj8ccfjw984ANrPf7DH/5wHHjggfG1r30t+vr64vTTT49XvepVcccdd0RHR8cf/TzXXHNNvPSlL43ddtstLrjggujq6oovfvGL8apXvSq+853vxBve8IY48cQTY/fdd4+jjz463v3ud8eb3vSm6OrqWq9ff0TE/fffHxER22233Vpvv/fee+NNb3pTTJ8+PYYNGxY333xzfPKTn4w777wz/vVf/zUi1v/37yknnnhiHHnkkfHtb387HnrooXj/+98fb37zm+Oqq64afMzb3va2+Pd///f4wAc+EIceemjcfvvt8Vd/9VfR19e31sd673vfG//2b/8W//f//t/Yc889Y+nSpTFnzpx44okn1vv3AgBgQzioAgAQERGjRo2KzTbb7GnPHPxDN9xwQ6xYsSL++Z//OXbffffBt7/pTW8a/L/33nvviPj9ywX8sS8BP+644+Kss85qtOvRRx+NG2+8cfDzHXHEEbFgwYL4xCc+Ee94xzti5MiRjT5ORMROO+0UY8eOja6urkZfnn7mmWfGqlWr4qc//WlMnTo1In5/eF60aFGcddZZ8Xd/93fR09Oz1sf/5je/OfjPHR0d8frXvz5mzZq1zs/3wQ9+MMaNGxdXX311jB49OiIiXvnKV8Yee+wRp512Wrz+9a+PKVOmxJo1ayJi7S/j/1MGBgZizZo10d/fH3feeWecfPLJseWWW8Z73/vetR736U9/eq2f86IXvSgmTJgQb3vb2+Lcc8+NcePGrffv31Ne/vKXr/Ws4ieffDI+8IEPxPz582PSpElx++23x3e+8504/fTTY+bMmRER8dKXvjS22GKLeOMb37jWx/rlL38ZL3vZy+I973nP4NuOPPLIxlsAAP5cvuQfAIBB7XZ7ne/fY489YtiwYfH2t789Lrzwwrjvvvs26PO89rWvbfzYnXfeea3jbcTvD7h9fX0xe/bsDfr8TV111VVx2GGHDR5Tn3L88cfHsmXLnvZNtI466qi1/nm33XaLiIgHHnjgj36OpUuXxnXXXReve93rBo+pEb8/xr7lLW+Jhx9+uPHLBjyT008/PYYOHTr4cgVz5syJ733ve097uYAbb7wxjjrqqJgwYUJ0dHTE0KFD461vfWv09/fH3XffvcGfP+JP/75cc801ERHx+te/fq3Hve51r4vOzrWfA7LffvvF97///fjgBz8YV199dSxfvvzP2gYAsL4cVAEAiIjfH/aeeOKJmDx58h99zIwZM+LHP/5xTJw4Md75znfGjBkzYsaMGfG5z31uvT7Xlltu2fixkyZN+qNve7a/zPuJJ554xq1P/R79788/YcKEtf75qS/JX9fRb+HChdFut9fr86yPU045JWbNmhW/+MUv4lOf+lSsXr06Xv3qV6/1MR988MF40YteFI888kh87nOfi5///Ocxa9as+MIXvvAn9zfxp35fntry1DdDe0pnZ+fTfu7nP//5OP300+Oyyy6Ll7zkJTF+/Ph4zWteE3Pnzv2zNgIANOWgCgBARERcccUV0d/fH4cccsg6H/eiF70ovve970Vvb2/8+te/jgMOOCBOPfXUuPjiixt/rj/2zaeeyfz58//o2546tg0fPjwifv+Njf7Q7373u8af55lMmDAhHnvssae9/amXRdhss83+rI8fETFu3LgYMmTIs/Z5pkyZEvvss08ceOCB8b73vS++9rWvxSOPPBJnnHHG4GMuu+yyWLp0aVxyySXx5je/OQ466KDYZ599YtiwYRv8edfHU3+O//sbZa1Zs+Zpx+RRo0bFWWedFXfeeWfMnz8/zj///Pj1r38dr3rVqzbJVgAAB1UAAOLBBx+M0047LXp6euLv/u7vGv2cjo6O2H///QefxfjUl983eVbm+rjtttvi5ptvXutt3/72t2PMmDGx1157RUQMfvn6LbfcstbjLr/88qd9vK6ursbbDjvssLjqqque9rqyF110UYwcOXK9Xkf0jxk1alTsv//+cckll6y1a2BgIL75zW/GlClTnvYNpP4cxx57bBxyyCHx1a9+dfBL7p86cP/hN7lqt9vx1a9+9Wk/f31+/5p68YtfHBER//7v/77W2//rv/5r8HVjn8kWW2wRxx9/fLzxjW+Mu+66K5YtW7ZRdwEAPBPflAoAoDJz5syJNWvWxJo1a2LBggXx85//PL7+9a9HR0dHXHrppbH55pv/0Z/7pS99Ka666qo48sgjY6uttooVK1YMfgf4ww8/PCIixowZE1tvvXX8f//f/xeHHXZYjB8/PjbbbLOnvWZnU5MnT46jjjoqzjzzzNhyyy3jm9/8Zlx55ZVxzjnnDH5Dqn333Te23377OO2002LNmjUxbty4uPTSS+MXv/jF0z7errvuGpdcckmcf/75sffee8eQIUNin332ecbPfcYZZ8R///d/x0te8pL4h3/4hxg/fnx861vfiiuuuCL+6Z/+aa1vSPXnmDlzZrz0pS+Nl7zkJXHaaafFsGHD4otf/GLMmTMnvvOd76zXM3qbOOecc2L//fePT3ziE/G1r30tXvrSl8awYcPijW98Y3zgAx+IFStWxPnnnx8LFy582s9dn9+/pnbeeed44xvfGOeee250dHTEoYceGrfddluce+650dPTE0OG/L/ngey///7xyle+MnbbbbcYN25c3HHHHfFv//ZvccABB6zXNygDANhQDqoAAJV529veFhERw4YNi7Fjx8aOO+4Yp59+epx44onrPKZG/P6bUv3oRz+KM844I+bPnx+jR4+OXXbZJS6//PJ42cteNvi4Cy64IN7//vfHUUcdFStXrozjjjsuvvGNb2zQ3j322CPe9ra3xRlnnBFz586NyZMnx6c//em1vst7R0dHfO9734t3vetdcdJJJ0VXV1ccc8wxcd555z3tO8Cfcsopcdttt8WHP/zh6O3tjXa7/Ue/Gdf2228fv/rVr+LDH/5wvPOd74zly5fHjjvuGF//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nHfeec/4/n/6p3+KT3/603HeeefFrFmzYtKkSfHSl740Fi9ePPiYU089NS699NK4+OKL4xe/+EUsWbIkXvnKV0Z/f/+m+mXwHHbNNdfEO9/5zvj1r38dV155ZaxZsyZe9rKXxdKlSwcfo0OebVOmTImzzz47rr/++rj++uvj0EMPjVe/+tWD/+FYg2xKs2bNiq985Sux2267rfV2HbIp7LzzzvHYY48N/rj11lsH36dBnm0LFy6MAw88MIYOHRrf//734/bbb49zzz03xo4dO/gYHfJsmzVr1lp/D1555ZUREfHXf/3XEaFB/kCbou23337tk046aa237bDDDu0PfvCDSYt4voqI9qWXXjr4zwMDA+1Jkya1zz777MG3rVixot3T09P+0pe+1G632+1Fixa1hw4d2r744osHH/PII4+0hwwZ0v7BD36wybbz/LFgwYJ2RLSvueaadrutQ/KMGzeu/bWvfU2DbFKLFy9ub7vttu0rr7yyffDBB7dPOeWUdrvt70I2jTPOOKO9++67P+P7NMimcPrpp7cPOuigP/p+HZLhlFNOac+YMaM9MDCgQdbiGaoFW7VqVdxwww3xspe9bK23v+xlL4tf/epXSauoxf333x/z589fq7+urq44+OCDB/u74YYbYvXq1Ws9ZvLkybHLLrtolA3S29sbERHjx4+PCB2y6fX398fFF18cS5cujQMOOECDbFLvfOc748gjj4zDDz98rbfrkE1l7ty5MXny5Jg+fXocc8wxcd9990WEBtk0Lr/88thnn33ir//6r2PixImx5557xle/+tXB9+uQTW3VqlXxzW9+M0444YRotVoaZC0OqgX73e9+F/39/bHFFlus9fYtttgi5s+fn7SKWjzV2Lr6mz9/fgwbNizGjRv3Rx8DTbXb7Xjve98bBx10UOyyyy4RoUM2nVtvvTVGjx4dXV1dcdJJJ8Wll14aO+20kwbZZC6++OKYPXt2zJw582nv0yGbwv777x8XXXRR/PCHP4yvfvWrMX/+/HjhC18YTzzxhAbZJO677744//zzY9ttt40f/vCHcdJJJ8Xf//3fx0UXXRQR/i5k07vsssti0aJFcfzxx0eEBllbZ/YA/rRWq7XWP7fb7ae9DZ4tG9KfRtkQ73rXu+KWW26JX/ziF097nw55tm2//fZx0003xaJFi+K73/1uHHfccXHNNdcMvl+DPJseeuihOOWUU+JHP/pRDB8+/I8+Toc8m4444ojB/3vXXXeNAw44IGbMmBEXXnhh/J//838iQoM8uwYGBmKfffaJf/zHf4yIiD333DNuu+22OP/88+Otb33r4ON0yKZywQUXxBFHHBGTJ09e6+0aJMIzVIu22WabRUdHx9P+V4wFCxY87X8RgY3tqe/quq7+Jk2aFKtWrYqFCxf+0cdAE+9+97vj8ssvj5/+9KcxZcqUwbfrkE1l2LBhsc0228Q+++wTM2fOjN133z0+97nPaZBN4oYbbogFCxbE3nvvHZ2dndHZ2RnXXHNNfP7zn4/Ozs7BjnTIpjRq1KjYddddY+7cuf4uZJPYcsstY6eddlrrbTvuuOPgN2TWIZvSAw88ED/+8Y/jxBNPHHybBvlDDqoFGzZsWOy9996D31XuKVdeeWW88IUvTFpFLaZPnx6TJk1aq79Vq1bFNddcM9jf3nvvHUOHDl3rMY899ljMmTNHozTSbrfjXe96V1xyySVx1VVXxfTp09d6vw7J0m63Y+XKlRpkkzjssMPi1ltvjZtuumnwxz777BPHHnts3HTTTfGCF7xAh2xyK1eujDvuuCO23HJLfxeySRx44IFx1113rfW2u+++O7beeuuI8J8L2bS+/vWvx8SJE+PII48cfJsGWcum/i5YrJ+LL764PXTo0PYFF1zQvv3229unnnpqe9SoUe158+ZlT+N5YPHixe0bb7yxfeONN7Yjov3pT3+6feONN7YfeOCBdrvdbp999tntnp6e9iWXXNK+9dZb22984xvbW265Zbuvr2/wY5x00kntKVOmtH/84x+3Z8+e3T700EPbu+++e3vNmjVZvyyeQ04++eR2T09P++qrr24/9thjgz+WLVs2+Bgd8mz70Ic+1P7Zz37Wvv/++9u33HJL+8Mf/nB7yJAh7R/96EftdluD5Dj44IPbp5xyyuA/65Bn2/ve97721Vdf3b7vvvvav/71r9uvfOUr22PGjBn87x0a5Nn2m9/8pt3Z2dn+5Cc/2Z47d277W9/6VnvkyJHtb37zm4OP0SGbQn9/f3urrbZqn3766U97nwZ5ioPqc8AXvvCF9tZbb90eNmxYe6+99mpfc8012ZN4nvjpT3/ajoin/TjuuOPa7Xa7PTAw0D7jjDPakyZNand1dbVf/OIXt2+99da1Psby5cvb73rXu9rjx49vjxgxov3KV76y/eCDDyb8angueqb+IqL99a9/ffAxOuTZdsIJJwz+e3bzzTdvH3bYYYPH1HZbg+T43wdVHfJse8Mb3tDecsst20OHDm1Pnjy5ffTRR7dvu+22wfdrkE3he9/7XnuXXXZpd3V1tXfYYYf2V77ylbXer0M2hR/+8IftiGjfddddT3ufBnlKq91ut1OeGgsAAAAA8BzjNVQBAAAAABpyUAUAAAAAaMhBFQAAAACgIQdVAAAAAICGHFQBAAAAABpyUAUAAAAAaMhBFQAAAACgIQdVAAAAAICGHFQBAKAw8+bNi1arFTfddFP2FAAA/hcHVQAAAACAhhxUAQDgfxkYGIhzzjknttlmm+jq6oqtttoqPvnJT0ZExK233hqHHnpojBgxIiZMmBBvf/vbY8mSJYM/95BDDolTTz11rY/3mte8Jo4//vjBf542bVr84z/+Y5xwwgkxZsyY2GqrreIrX/nK4PunT58eERF77rlntFqtOOSQQ561XysAAOvHQRUAAP6XD33oQ3HOOefExz72sbj99tvj29/+dmyxxRaxbNmyePnLXx7jxo2LWbNmxX/+53/Gj3/843jXu9613p/j3HPPjX322SduvPHGeMc73hEnn3xy3HnnnRER8Zvf/CYiIn784x/HY489FpdccslG/fUBALDhOrMHAABASRYvXhyf+9zn4rzzzovjjjsuIiJmzJgRBx10UHz1q1+N5cuXx0UXXRSjRo2KiIjzzjsvXvWqV8U555wTW2yxRePP84pXvCLe8Y53RETE6aefHp/5zGfi6quvjh122CE233zziIiYMGFCTJo0aSP/CgEA+HN4hioAAPyBO+64I1auXBmHHXbYM75v9913HzymRkQceOCBMTAwEHfdddd6fZ7ddttt8P9utVoxadKkWLBgwYYPBwBgk3BQBQCAPzBixIg/+r52ux2tVusZ3/fU24cMGRLtdnut961evfppjx86dOjTfv7AwMD6zgUAYBNzUAUAgD+w7bbbxogRI+InP/nJ09630047xU033RRLly4dfNsvf/nLGDJkSGy33XYREbH55pvHY489Nvj+/v7+mDNnznptGDZs2ODPBQCgLA6qAADwB4YPHx6nn356fOADH4iLLroo7r333vj1r38dF1xwQRx77LExfPjwOO6442LOnDnx05/+NN797nfHW97ylsHXTz300EPjiiuuiCuuuCLuvPPOeMc73hGLFi1arw0TJ06MESNGxA9+8IN4/PHHo7e391n4lQIAsCEcVAEA4H/52Mc+Fu973/viH/7hH2LHHXeMN7zhDbFgwYIYOXJk/PCHP4wnn3wy9t1333jd614Xhx12WJx33nmDP/eEE06I4447Lt761rfGwQcfHNOnT4+XvOQl6/X5Ozs74/Of/3x8+ctfjsmTJ8erX/3qjf1LBABgA7Xa//sFngAAAAAAeEaeoQoAAAAA0JCDKgAAAABAQw6qAAAAAAANOagCAAAAADTkoAoAAAAA0JCDKgAAAABAQw6qAAAAAAANOagCAAAAADTkoAoAAAAA0JCDKgAAAABAQw6qAAAAAAANOagCAAAAADT0/wPoB1CSdZ/sgQAAAABJRU5ErkJggg=="/>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Extract percentage for orders without a customer rating</span>
+<span class="n">orders_no_rating</span> <span class="o">=</span> <span class="n">rstats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"percentage"</span><span class="p">]</span>
+
+<span class="c1"># Calculate Customer Rating Participation Rate (CRPR)</span>
+<span class="n">crpr</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="n">orders_no_rating</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -10026,6 +10092,158 @@ memory usage: 148.4+ KB
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Percentages and counts of total orders for the updated 'rating' feature</span>
+<span class="n">rstats</span> <span class="o">=</span> <span class="n">fstats</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">"rating"</span><span class="p">)</span>
+
+<span class="c1"># Display DataFrame</span>
+<span class="n">rstats</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>rating</th>
+<th>count</th>
+<th>percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>5.0</td>
+<td>588</td>
+<td>50.60</td>
+</tr>
+<tr>
+<th>1</th>
+<td>4.0</td>
+<td>386</td>
+<td>33.22</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3.0</td>
+<td>188</td>
+<td>16.18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Extract percentages for promoters (rating 5) and detractors (rating 3)</span>
+<span class="n">promoters</span> <span class="o">=</span> <span class="n">rstats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"percentage"</span><span class="p">]</span>
+<span class="n">detractors</span> <span class="o">=</span> <span class="n">rstats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"percentage"</span><span class="p">]</span>
+
+<span class="c1"># Calculate Net Promoter Score (NPS)</span>
+<span class="n">nps</span> <span class="o">=</span> <span class="n">promoters</span> <span class="o">-</span> <span class="n">detractors</span>
+
+<span class="c1"># Convert to DataFrame</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">metrics_to_dataframe</span><span class="p">(</span>
+    <span class="n">customer_rating_participation_rate</span><span class="o">=</span><span class="p">(</span><span class="n">crpr</span><span class="p">,</span> <span class="s2">"%"</span><span class="p">),</span>
+    <span class="n">net_promoter_score</span><span class="o">=</span><span class="p">(</span><span class="n">nps</span><span class="p">,</span> <span class="s2">"%"</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># Display DataFrame</span>
+<span class="n">metrics_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>metric</th>
+<th>unit</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>customer_rating_participation_rate</td>
+<td>%</td>
+<td>61.22</td>
+</tr>
+<tr>
+<th>1</th>
+<td>net_promoter_score</td>
+<td>%</td>
+<td>34.42</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -10035,9 +10253,10 @@ memory usage: 148.4+ KB
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observations</strong>:</p>
 <ul>
-<li>A considerable number of orders, 38.78%, lacked a provided rating.</li>
-<li>Most of the rated orders were given a 5, constituting 30.98% of the total.</li>
-<li>'Not given' ratings were replaced by NaN, and the column type was converted to 'float64'.</li>
+<li><strong>Customer Rating Participation Rate</strong>: 61.22% of orders received ratings, leaving 38.78% unrated, suggesting the need for targeted strategies to improve customer engagement and loyalty for sustaining long-term growth.</li>
+<li><strong>5-Star Ratings</strong>: 30.98% of the rated orders received a 5-star rating, making it the most common rating.</li>
+<li><strong>Net Promoter Score (NPS)</strong>: The NPS stands at 34.42%, indicating positive customer sentiment, though the high percentage of missing ratings could skew this interpretation depending on the tendencies of non-raters.</li>
+<li><strong>Data Update</strong>: Ratings marked as 'Not given' were replaced with 'NaN', and the column’s data type was converted to 'float64'.</li>
 </ul>
 </div>
 </div>
@@ -10205,6 +10424,73 @@ memory usage: 148.4+ KB
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate the customer retention rate</span>
+<span class="n">crr</span> <span class="o">=</span> <span class="n">top_customers</span><span class="p">[</span><span class="n">top_customers</span><span class="p">[</span><span class="s2">"count"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_orders</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="c1"># Convert to DataFrame</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">metrics_to_dataframe</span><span class="p">(</span>
+    <span class="n">customer_retention_rate</span><span class="o">=</span><span class="p">(</span><span class="n">crr</span><span class="p">,</span> <span class="s2">"%"</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># Display DataFrame</span>
+<span class="n">metrics_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>metric</th>
+<th>unit</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>customer_retention_rate</td>
+<td>%</td>
+<td>21.92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -10214,7 +10500,8 @@ memory usage: 148.4+ KB
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observations</strong>:</p>
 <ul>
-<li>Less than 1% of customers account for over 5% of orders, highlighting the influence of a small group of highly active customers on overall order volume.</li>
+<li><strong>High-Impact Customers:</strong> Less than 1% of customers account for over 5% of orders, underscoring the impact of a small group of highly active customers on total order volume.</li>
+<li><strong>Customer Retention Rate</strong>: The customer retention rate stands at 21.92%, indicating that just over one-fifth of customers return to place additional orders. This suggests a need for targeted strategies to improve customer loyalty and increase repeat business, which is crucial for sustaining long-term growth.</li>
 </ul>
 </div>
 </div>
@@ -10348,8 +10635,8 @@ memory usage: 148.4+ KB
 <p><strong>Observations</strong>:</p>
 <ul>
 <li>The distribution is right-skewed with a mean higher than the median and a high standard deviation, indicating wide data variation.</li>
-<li>Order costs range from \$4.47 to \$35.41, with an average order cost of \$16.50 and a standard deviation of \$7.48.</li>
-<li>A notable portion of the orders (29.24%) exceeds $20, which might indicate customer willingness to pay for premium options or larger order sizes.</li>
+<li>Order costs range from \$4.47 to \$35.41, with an average order value of \$16.50 and a standard deviation of \$7.48.</li>
+<li>A significant portion of orders (29.24%) exceeds $20, indicating potential demand and customer willingness to pay for premium options or larger order sizes.</li>
 </ul>
 </div>
 </div>
@@ -10362,23 +10649,37 @@ memory usage: 148.4+ KB
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Set upper and lower take rate to calculate the total net revenue</span>
-<span class="n">uL</span><span class="p">,</span> <span class="n">lL</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.15</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate the total gross merchandise value (GMV), the average order value (AOV) and order volume</span>
+<span class="n">gmv</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"cost_of_the_order"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ov</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"order_id"</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>  <span class="c1"># here identical to df.shape[0]</span>
+<span class="n">aov</span> <span class="o">=</span> <span class="n">gmv</span> <span class="o">/</span> <span class="n">ov</span>
 
-<span class="c1"># Apply net_revenue function to calculate the net revenue for each order</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">"net revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"cost_of_the_order"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">net_revenue</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">uL</span><span class="p">,</span> <span class="n">lL</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># Define commission rates (upper and lower limits) and operating cost percentage</span>
+<span class="n">uL</span><span class="p">,</span> <span class="n">lL</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.15</span>  <span class="c1"># Commission rates based on order size</span>
+<span class="n">net_margin</span> <span class="o">=</span> <span class="mf">0.625</span>  <span class="c1"># Assumption of 37.5% operating costs per order</span>
 
-<span class="c1"># Calculate the total net revenue</span>
-<span class="n">total_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"net revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-<span class="c1"># Convert the total net revenue into a DataFrame</span>
-<span class="n">total_net_rev</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"metric"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"net_revenue"</span><span class="p">],</span> <span class="s2">"total"</span><span class="p">:</span> <span class="p">[</span><span class="n">total_rev</span><span class="p">]})</span>
+<span class="c1"># Calculate total and net revenue for each order</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"total_revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"cost_of_the_order"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">net_revenue</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">uL</span><span class="p">,</span> <span class="n">lL</span><span class="p">))</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"net_revenue"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"total_revenue"</span><span class="p">]</span> <span class="o">*</span> <span class="n">net_margin</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Format the 'total' column to include a dollar sign</span>
-<span class="n">total_net_rev</span><span class="p">[</span><span class="s2">"total"</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_net_rev</span><span class="p">[</span><span class="s2">"total"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"$</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Aggregate total revenue, net revenue across all orders, and compute profit margin</span>
+<span class="n">total_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"total_revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">total_net_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"net_revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">profit_margin</span> <span class="o">=</span> <span class="n">total_net_rev</span> <span class="o">/</span> <span class="n">total_rev</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="c1"># Convert to DataFrame</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">metrics_to_dataframe</span><span class="p">(</span>
+    <span class="n">gross_merchandise_value</span><span class="o">=</span><span class="p">(</span><span class="n">gmv</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
+    <span class="n">average_order_value</span><span class="o">=</span><span class="p">(</span><span class="n">aov</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
+    <span class="n">order_volume</span><span class="o">=</span><span class="p">(</span><span class="n">ov</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">),</span>
+    <span class="n">total_rev</span><span class="o">=</span><span class="p">(</span><span class="n">total_rev</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
+    <span class="n">total_net_rev</span><span class="o">=</span><span class="p">(</span><span class="n">total_net_rev</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
+    <span class="n">profit_margin</span><span class="o">=</span><span class="p">(</span><span class="n">profit_margin</span><span class="p">,</span> <span class="s2">"%"</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="c1"># Display DataFrame</span>
-<span class="n">total_net_rev</span>
+<span class="n">metrics_df</span>
 </pre></div>
 </div>
 </div>
@@ -10410,14 +10711,46 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>metric</th>
-<th>total</th>
+<th>unit</th>
+<th>value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
-<td>net_revenue</td>
-<td>$6,166.40</td>
+<td>gross_merchandise_value</td>
+<td>\$</td>
+<td>31314.82</td>
+</tr>
+<tr>
+<th>1</th>
+<td>average_order_value</td>
+<td>\$</td>
+<td>16.50</td>
+</tr>
+<tr>
+<th>2</th>
+<td>order_volume</td>
+<td>-</td>
+<td>1898.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>total_rev</td>
+<td>\$</td>
+<td>6166.40</td>
+</tr>
+<tr>
+<th>4</th>
+<td>total_net_rev</td>
+<td>\$</td>
+<td>3853.06</td>
+</tr>
+<tr>
+<th>5</th>
+<td>profit_margin</td>
+<td>%</td>
+<td>62.48</td>
 </tr>
 </tbody>
 </table>
@@ -10435,8 +10768,13 @@ memory usage: 148.4+ KB
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observations</strong>:</p>
 <ul>
-<li><strong>Take Rate</strong>: The company applies a take rate of 25% for orders costing more than \$20 and 15% for orders costing between \$5 and $20. Orders costing less than \$5 are not charged a take rate.</li>
-<li><strong>Net Revenue</strong>: The total net revenue generated by the company from all orders amounts to \$6,166.40, highlighting the effectiveness of the tiered take rate structure in generating significant revenue.</li>
+<li><strong>Commision Rate</strong>: The company applies a take rate of 25% for orders over \$20 and 15% for orders between \$5 and \$20, with no charge for orders under \$5.</li>
+<li><strong>Gross Merchandise Value (GMV)</strong>: The total sales volume is \$31,314.82, indicating strong overall sales performance.</li>
+<li><strong>Average Order Value (AOV)</strong>: \$16.50, reflecting the typical spending per order, suggesting customers are making moderately priced purchases.</li>
+<li><strong>Order Volume</strong>: A total of 1,898 orders were processed.</li>
+<li><strong>Total Revenue</strong>: The company generated \$6,166.40 from all orders, demonstrating the effectiveness of the tiered take rate structure.</li>
+<li><strong>Net Revenue</strong>: After accounting for operating costs, the company’s net revenue is \$4,008.44, indicating profitability.</li>
+<li><strong>Profit Margin</strong>: With operational costs estimated at 35% of total revenue, the profit margin is approximately 65%, reflecting strong financial health.</li>
 </ul>
 </div>
 </div>
@@ -10759,8 +11097,8 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>cuisine_type</th>
-<th>weekday_counts</th>
-<th>weekday_percentage</th>
+<th>count_weekday</th>
+<th>percentage_weekday</th>
 </tr>
 </thead>
 <tbody>
@@ -10896,8 +11234,8 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>cuisine_type</th>
-<th>weekend_counts</th>
-<th>weekend_percentage</th>
+<th>count_weekend</th>
+<th>percentage_weekend</th>
 </tr>
 </thead>
 <tbody>
@@ -11472,7 +11810,7 @@ memory usage: 148.4+ KB
 <span class="n">cuisine_ratings</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"cuisine_type"</span><span class="p">)[</span><span class="s2">"rating"</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Rename columns for clarity</span>
-<span class="n">cuisine_ratings</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"counts_rating"</span><span class="p">,</span> <span class="s2">"mean_rating"</span><span class="p">]</span>
+<span class="n">cuisine_ratings</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"count_rating"</span><span class="p">,</span> <span class="s2">"mean_rating"</span><span class="p">]</span>
 
 <span class="c1"># Sort the DataFrame by mean_rating in descending order and reset the index</span>
 <span class="n">cuisine_ratings</span> <span class="o">=</span> <span class="n">cuisine_ratings</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">"mean_rating"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -11510,7 +11848,7 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>cuisine_type</th>
-<th>counts_rating</th>
+<th>count_rating</th>
 <th>mean_rating</th>
 </tr>
 </thead>
@@ -12017,71 +12355,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_92167_row4_col0, #T_92167_row4_col1 {
+#T_bd2ef_row4_col0, #T_bd2ef_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_92167_level0_row4 {
+#T_bd2ef_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_92167">
+<table id="T_bd2ef">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_92167_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_92167_level0_col1">average_food_preparation_time</th>
+<th class="col_heading level0 col0" id="T_bd2ef_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_bd2ef_level0_col1">average_food_preparation_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_92167_level0_row0">0</th>
-<td class="data row0 col0" id="T_92167_row0_col0">Cafe Mogador</td>
-<td class="data row0 col1" id="T_92167_row0_col1">25.28</td>
+<th class="row_heading level0 row0" id="T_bd2ef_level0_row0">0</th>
+<td class="data row0 col0" id="T_bd2ef_row0_col0">Cafe Mogador</td>
+<td class="data row0 col1" id="T_bd2ef_row0_col1">25.28</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_92167_level0_row1">1</th>
-<td class="data row1 col0" id="T_92167_row1_col0">Five Guys Burgers and Fries</td>
-<td class="data row1 col1" id="T_92167_row1_col1">25.62</td>
+<th class="row_heading level0 row1" id="T_bd2ef_level0_row1">1</th>
+<td class="data row1 col0" id="T_bd2ef_row1_col0">Five Guys Burgers and Fries</td>
+<td class="data row1 col1" id="T_bd2ef_row1_col1">25.62</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_92167_level0_row2">2</th>
-<td class="data row2 col0" id="T_92167_row2_col0">Westville Hudson</td>
-<td class="data row2 col1" id="T_92167_row2_col1">25.67</td>
+<th class="row_heading level0 row2" id="T_bd2ef_level0_row2">2</th>
+<td class="data row2 col0" id="T_bd2ef_row2_col0">Westville Hudson</td>
+<td class="data row2 col1" id="T_bd2ef_row2_col1">25.67</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_92167_level0_row3">3</th>
-<td class="data row3 col0" id="T_92167_row3_col0">Chipotle Mexican Grill</td>
-<td class="data row3 col1" id="T_92167_row3_col1">26.00</td>
+<th class="row_heading level0 row3" id="T_bd2ef_level0_row3">3</th>
+<td class="data row3 col0" id="T_bd2ef_row3_col0">Chipotle Mexican Grill</td>
+<td class="data row3 col1" id="T_bd2ef_row3_col1">26.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_92167_level0_row4">4</th>
-<td class="data row4 col0" id="T_92167_row4_col0">The Smile</td>
-<td class="data row4 col1" id="T_92167_row4_col1">26.11</td>
+<th class="row_heading level0 row4" id="T_bd2ef_level0_row4">4</th>
+<td class="data row4 col0" id="T_bd2ef_row4_col0">The Smile</td>
+<td class="data row4 col1" id="T_bd2ef_row4_col1">26.11</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_92167_level0_row5">35</th>
-<td class="data row5 col0" id="T_92167_row5_col0">J. G. Melon</td>
-<td class="data row5 col1" id="T_92167_row5_col1">28.47</td>
+<th class="row_heading level0 row5" id="T_bd2ef_level0_row5">35</th>
+<td class="data row5 col0" id="T_bd2ef_row5_col0">J. G. Melon</td>
+<td class="data row5 col1" id="T_bd2ef_row5_col1">28.47</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_92167_level0_row6">36</th>
-<td class="data row6 col0" id="T_92167_row6_col0">Blue Ribbon Sushi Izakaya</td>
-<td class="data row6 col1" id="T_92167_row6_col1">28.72</td>
+<th class="row_heading level0 row6" id="T_bd2ef_level0_row6">36</th>
+<td class="data row6 col0" id="T_bd2ef_row6_col0">Blue Ribbon Sushi Izakaya</td>
+<td class="data row6 col1" id="T_bd2ef_row6_col1">28.72</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_92167_level0_row7">37</th>
-<td class="data row7 col0" id="T_92167_row7_col0">Otto Enoteca Pizzeria</td>
-<td class="data row7 col1" id="T_92167_row7_col1">29.00</td>
+<th class="row_heading level0 row7" id="T_bd2ef_level0_row7">37</th>
+<td class="data row7 col0" id="T_bd2ef_row7_col0">Otto Enoteca Pizzeria</td>
+<td class="data row7 col1" id="T_bd2ef_row7_col1">29.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_92167_level0_row8">38</th>
-<td class="data row8 col0" id="T_92167_row8_col0">Sushi Samba</td>
-<td class="data row8 col1" id="T_92167_row8_col1">29.09</td>
+<th class="row_heading level0 row8" id="T_bd2ef_level0_row8">38</th>
+<td class="data row8 col0" id="T_bd2ef_row8_col0">Sushi Samba</td>
+<td class="data row8 col1" id="T_bd2ef_row8_col1">29.09</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_92167_level0_row9">39</th>
-<td class="data row9 col0" id="T_92167_row9_col0">S'MAC</td>
-<td class="data row9 col1" id="T_92167_row9_col1">29.42</td>
+<th class="row_heading level0 row9" id="T_bd2ef_level0_row9">39</th>
+<td class="data row9 col0" id="T_bd2ef_row9_col0">S'MAC</td>
+<td class="data row9 col1" id="T_bd2ef_row9_col1">29.42</td>
 </tr>
 </tbody>
 </table>
@@ -12114,71 +12452,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_47bbd_row4_col0, #T_47bbd_row4_col1 {
+#T_04b70_row4_col0, #T_04b70_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_47bbd_level0_row4 {
+#T_04b70_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_47bbd">
+<table id="T_04b70">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_47bbd_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_47bbd_level0_col1">average_delivery_time</th>
+<th class="col_heading level0 col0" id="T_04b70_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_04b70_level0_col1">average_delivery_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_47bbd_level0_row0">0</th>
-<td class="data row0 col0" id="T_47bbd_row0_col0">Westville Hudson</td>
-<td class="data row0 col1" id="T_47bbd_row0_col1">21.73</td>
+<th class="row_heading level0 row0" id="T_04b70_level0_row0">0</th>
+<td class="data row0 col0" id="T_04b70_row0_col0">Westville Hudson</td>
+<td class="data row0 col1" id="T_04b70_row0_col1">21.73</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_47bbd_level0_row1">1</th>
-<td class="data row1 col0" id="T_47bbd_row1_col0">Sushi of Gari</td>
-<td class="data row1 col1" id="T_47bbd_row1_col1">21.94</td>
+<th class="row_heading level0 row1" id="T_04b70_level0_row1">1</th>
+<td class="data row1 col0" id="T_04b70_row1_col0">Sushi of Gari</td>
+<td class="data row1 col1" id="T_04b70_row1_col1">21.94</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_47bbd_level0_row2">2</th>
-<td class="data row2 col0" id="T_47bbd_row2_col0">Hill Country Fried Chicken</td>
-<td class="data row2 col1" id="T_47bbd_row2_col1">22.64</td>
+<th class="row_heading level0 row2" id="T_04b70_level0_row2">2</th>
+<td class="data row2 col0" id="T_04b70_row2_col0">Hill Country Fried Chicken</td>
+<td class="data row2 col1" id="T_04b70_row2_col1">22.64</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_47bbd_level0_row3">3</th>
-<td class="data row3 col0" id="T_47bbd_row3_col0">Jack's Wife Freda</td>
-<td class="data row3 col1" id="T_47bbd_row3_col1">22.72</td>
+<th class="row_heading level0 row3" id="T_04b70_level0_row3">3</th>
+<td class="data row3 col0" id="T_04b70_row3_col0">Jack's Wife Freda</td>
+<td class="data row3 col1" id="T_04b70_row3_col1">22.72</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_47bbd_level0_row4">4</th>
-<td class="data row4 col0" id="T_47bbd_row4_col0">Otto Enoteca Pizzeria</td>
-<td class="data row4 col1" id="T_47bbd_row4_col1">22.92</td>
+<th class="row_heading level0 row4" id="T_04b70_level0_row4">4</th>
+<td class="data row4 col0" id="T_04b70_row4_col0">Otto Enoteca Pizzeria</td>
+<td class="data row4 col1" id="T_04b70_row4_col1">22.92</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_47bbd_level0_row5">35</th>
-<td class="data row5 col0" id="T_47bbd_row5_col0">J. G. Melon</td>
-<td class="data row5 col1" id="T_47bbd_row5_col1">25.00</td>
+<th class="row_heading level0 row5" id="T_04b70_level0_row5">35</th>
+<td class="data row5 col0" id="T_04b70_row5_col0">J. G. Melon</td>
+<td class="data row5 col1" id="T_04b70_row5_col1">25.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_47bbd_level0_row6">36</th>
-<td class="data row6 col0" id="T_47bbd_row6_col0">Momoya</td>
-<td class="data row6 col1" id="T_47bbd_row6_col1">25.13</td>
+<th class="row_heading level0 row6" id="T_04b70_level0_row6">36</th>
+<td class="data row6 col0" id="T_04b70_row6_col0">Momoya</td>
+<td class="data row6 col1" id="T_04b70_row6_col1">25.13</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_47bbd_level0_row7">37</th>
-<td class="data row7 col0" id="T_47bbd_row7_col0">Parm</td>
-<td class="data row7 col1" id="T_47bbd_row7_col1">25.50</td>
+<th class="row_heading level0 row7" id="T_04b70_level0_row7">37</th>
+<td class="data row7 col0" id="T_04b70_row7_col0">Parm</td>
+<td class="data row7 col1" id="T_04b70_row7_col1">25.50</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_47bbd_level0_row8">38</th>
-<td class="data row8 col0" id="T_47bbd_row8_col0">Cafe Habana</td>
-<td class="data row8 col1" id="T_47bbd_row8_col1">25.56</td>
+<th class="row_heading level0 row8" id="T_04b70_level0_row8">38</th>
+<td class="data row8 col0" id="T_04b70_row8_col0">Cafe Habana</td>
+<td class="data row8 col1" id="T_04b70_row8_col1">25.56</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_47bbd_level0_row9">39</th>
-<td class="data row9 col0" id="T_47bbd_row9_col0">Sushi of Gari 46</td>
-<td class="data row9 col1" id="T_47bbd_row9_col1">25.97</td>
+<th class="row_heading level0 row9" id="T_04b70_level0_row9">39</th>
+<td class="data row9 col0" id="T_04b70_row9_col0">Sushi of Gari 46</td>
+<td class="data row9 col1" id="T_04b70_row9_col1">25.97</td>
 </tr>
 </tbody>
 </table>
@@ -12211,71 +12549,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_4a973_row4_col0, #T_4a973_row4_col1 {
+#T_58bc2_row4_col0, #T_58bc2_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_4a973_level0_row4 {
+#T_58bc2_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_4a973">
+<table id="T_58bc2">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_4a973_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_4a973_level0_col1">average_order_completion_time</th>
+<th class="col_heading level0 col0" id="T_58bc2_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_58bc2_level0_col1">average_order_completion_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_4a973_level0_row0">0</th>
-<td class="data row0 col0" id="T_4a973_row0_col0">Westville Hudson</td>
-<td class="data row0 col1" id="T_4a973_row0_col1">47.40</td>
+<th class="row_heading level0 row0" id="T_58bc2_level0_row0">0</th>
+<td class="data row0 col0" id="T_58bc2_row0_col0">Westville Hudson</td>
+<td class="data row0 col1" id="T_58bc2_row0_col1">47.40</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_4a973_level0_row1">1</th>
-<td class="data row1 col0" id="T_4a973_row1_col0">Cafe Mogador</td>
-<td class="data row1 col1" id="T_4a973_row1_col1">48.22</td>
+<th class="row_heading level0 row1" id="T_58bc2_level0_row1">1</th>
+<td class="data row1 col0" id="T_58bc2_row1_col0">Cafe Mogador</td>
+<td class="data row1 col1" id="T_58bc2_row1_col1">48.22</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_4a973_level0_row2">2</th>
-<td class="data row2 col0" id="T_4a973_row2_col0">Five Guys Burgers and Fries</td>
-<td class="data row2 col1" id="T_4a973_row2_col1">49.03</td>
+<th class="row_heading level0 row2" id="T_58bc2_level0_row2">2</th>
+<td class="data row2 col0" id="T_58bc2_row2_col0">Five Guys Burgers and Fries</td>
+<td class="data row2 col1" id="T_58bc2_row2_col1">49.03</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_4a973_level0_row3">3</th>
-<td class="data row3 col0" id="T_4a973_row3_col0">Blue Ribbon Sushi Bar &amp; Grill</td>
-<td class="data row3 col1" id="T_4a973_row3_col1">49.70</td>
+<th class="row_heading level0 row3" id="T_58bc2_level0_row3">3</th>
+<td class="data row3 col0" id="T_58bc2_row3_col0">Blue Ribbon Sushi Bar &amp; Grill</td>
+<td class="data row3 col1" id="T_58bc2_row3_col1">49.70</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_4a973_level0_row4">4</th>
-<td class="data row4 col0" id="T_4a973_row4_col0">Chipotle Mexican Grill</td>
-<td class="data row4 col1" id="T_4a973_row4_col1">49.87</td>
+<th class="row_heading level0 row4" id="T_58bc2_level0_row4">4</th>
+<td class="data row4 col0" id="T_58bc2_row4_col0">Chipotle Mexican Grill</td>
+<td class="data row4 col1" id="T_58bc2_row4_col1">49.87</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_4a973_level0_row5">35</th>
-<td class="data row5 col0" id="T_4a973_row5_col0">Parm</td>
-<td class="data row5 col1" id="T_4a973_row5_col1">52.81</td>
+<th class="row_heading level0 row5" id="T_58bc2_level0_row5">35</th>
+<td class="data row5 col0" id="T_58bc2_row5_col0">Parm</td>
+<td class="data row5 col1" id="T_58bc2_row5_col1">52.81</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_4a973_level0_row6">36</th>
-<td class="data row6 col0" id="T_4a973_row6_col0">J. G. Melon</td>
-<td class="data row6 col1" id="T_4a973_row6_col1">53.47</td>
+<th class="row_heading level0 row6" id="T_58bc2_level0_row6">36</th>
+<td class="data row6 col0" id="T_58bc2_row6_col0">J. G. Melon</td>
+<td class="data row6 col1" id="T_58bc2_row6_col1">53.47</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_4a973_level0_row7">37</th>
-<td class="data row7 col0" id="T_4a973_row7_col0">Sushi of Gari 46</td>
-<td class="data row7 col1" id="T_4a973_row7_col1">53.51</td>
+<th class="row_heading level0 row7" id="T_58bc2_level0_row7">37</th>
+<td class="data row7 col0" id="T_58bc2_row7_col0">Sushi of Gari 46</td>
+<td class="data row7 col1" id="T_58bc2_row7_col1">53.51</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_4a973_level0_row8">38</th>
-<td class="data row8 col0" id="T_4a973_row8_col0">Sushi Samba</td>
-<td class="data row8 col1" id="T_4a973_row8_col1">53.73</td>
+<th class="row_heading level0 row8" id="T_58bc2_level0_row8">38</th>
+<td class="data row8 col0" id="T_58bc2_row8_col0">Sushi Samba</td>
+<td class="data row8 col1" id="T_58bc2_row8_col1">53.73</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_4a973_level0_row9">39</th>
-<td class="data row9 col0" id="T_4a973_row9_col0">S'MAC</td>
-<td class="data row9 col1" id="T_4a973_row9_col1">54.17</td>
+<th class="row_heading level0 row9" id="T_58bc2_level0_row9">39</th>
+<td class="data row9 col0" id="T_58bc2_row9_col0">S'MAC</td>
+<td class="data row9 col1" id="T_58bc2_row9_col1">54.17</td>
 </tr>
 </tbody>
 </table>
@@ -12319,16 +12657,18 @@ memory usage: 148.4+ KB
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Top 5 restaurants in terms of total revenue</span>
-<span class="n">total_revenue</span> <span class="o">=</span> <span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Top 5 restaurants in terms of gross merchandise value (GMV) per restaurant</span>
+<span class="n">gmv_restaurant</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"restaurant_name"</span><span class="p">)[</span><span class="s2">"cost_of_the_order"</span><span class="p">]</span>
     <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
     <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="p">)</span>
-<span class="n">total_revenue</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"cost_of_the_order"</span><span class="p">:</span> <span class="s2">"total_revenue"</span><span class="p">})</span>
+<span class="n">gmv_restaurant</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"cost_of_the_order"</span><span class="p">:</span> <span class="s2">"gross_merchandise_value"</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">gmv_restaurant</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -12360,7 +12700,7 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>restaurant_name</th>
-<th>total_revenue</th>
+<th>gross_merchandise_value</th>
 </tr>
 </thead>
 <tbody>
@@ -12405,7 +12745,7 @@ memory usage: 148.4+ KB
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observation:</strong></p>
 <ul>
-<li>The top 5 restaurants by total revenue are Shake Shack, The Meatball Shop, Blue Ribbon Sushi, Blue Ribbon Fried Chicken, and Parm, with Shake Shack leading significantly at \$3579.53.</li>
+<li><strong>Gross Merchandise Value (GMV)</strong>: The top 5 restaurants by GMV are Shake Shack, The Meatball Shop, Blue Ribbon Sushi, Blue Ribbon Fried Chicken, and Parm, with Shake Shack leading significantly at \$3,579.53.</li>
 </ul>
 </div>
 </div>
@@ -12440,11 +12780,11 @@ memory usage: 148.4+ KB
 <span class="n">rating_stats</span> <span class="o">=</span> <span class="n">rating_stats</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="c1"># Rename columns</span>
-<span class="n">rating_stats</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"restaurant_name"</span><span class="p">,</span> <span class="s2">"rating_count"</span><span class="p">,</span> <span class="s2">"average_rating"</span><span class="p">]</span>
+<span class="n">rating_stats</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"restaurant_name"</span><span class="p">,</span> <span class="s2">"count_rating"</span><span class="p">,</span> <span class="s2">"average_rating"</span><span class="p">]</span>
 
 <span class="c1"># Filter based on the given criteria</span>
 <span class="n">eligible_restaurants</span> <span class="o">=</span> <span class="n">rating_stats</span><span class="p">[</span>
-    <span class="p">(</span><span class="n">rating_stats</span><span class="p">[</span><span class="s2">"rating_count"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">r_cnt_th</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">rating_stats</span><span class="p">[</span><span class="s2">"count_rating"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">r_cnt_th</span><span class="p">)</span>
     <span class="o">&amp;</span> <span class="p">(</span><span class="n">rating_stats</span><span class="p">[</span><span class="s2">"average_rating"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">r_avg_th</span><span class="p">)</span>
 <span class="p">]</span>
 
@@ -12486,7 +12826,7 @@ memory usage: 148.4+ KB
 <tr style="text-align: right;">
 <th></th>
 <th>restaurant_name</th>
-<th>rating_count</th>
+<th>count_rating</th>
 <th>average_rating</th>
 </tr>
 </thead>
@@ -13042,61 +13382,57 @@ memory usage: 148.4+ KB
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This analysis highlights key business insights and metrics that can be leveraged to drive growth and set the company up for long-term success.</p>
+<p>This analysis highlights key business insights that can be leveraged to drive growth and set the company up for long-term success.</p>
 <p><strong>Data Quality</strong></p>
 <ul>
-<li>The dataset is comprehensive and well-maintained, with no missing values or duplicates present.</li>
-<li>Almost 40% of rating scores are missing, potentially affecting the accuracy of customer satisfaction insights.</li>
+<li>The dataset is comprehensive and well-maintained, with no missing values or duplicates, ensuring high data integrity.</li>
+<li>However, nearly 40% of the rating scores are missing, potentially affecting the accuracy of customer satisfaction metrics and insights.</li>
 </ul>
 <p><strong>Order Volume</strong></p>
 <ul>
-<li>Orders significantly increase over weekends, accounting for 71.18%, indicating higher demand during leisure periods.</li>
-<li>Less than 1% of customers account for over 5% of orders, highlighting the influence of a small group of highly active customers.</li>
+<li>The <strong>Order Volume</strong> significantly increase over weekends, accounting for 71.18%, indicating higher demand during leisure periods.</li>
+<li>A small, highly active group of customers, less than 1%, accounts for over 5% of total orders, highlighting their disproportionate influence on order volume.</li>
 </ul>
 <p><strong>Cuisine Popularity and Rating</strong></p>
 <ul>
-<li>American, Japanese, and Italian cuisines dominate, accounting for 70.84% and 79.39% of total orders on weekends and weekdays, respectively, suggesting strong customer preferences.</li>
-<li>Cuisines with over 100 ratings show consistent average ratings between 4.30 and 4.37, indicating steady customer satisfaction among popular choices.</li>
-<li>Spanish cuisine has the highest average rating at 4.83, followed by Thai and Indian, although both have relatively low counts, indicating higher uncertainty.</li>
-<li>Customer average rating scores for available cuisines range from 4.00 to 4.83.</li>
+<li>American, Japanese, and Italian cuisines dominate, accounting for over 70% of orders on both weekends and weekdays, underscoring strong customer preferences.</li>
+<li>Cuisines with more than 100 ratings show consistent average ratings between 4.30 and 4.37, indicating steady customer satisfaction among popular choices.</li>
+<li>Spanish and Thai cuisines, although highly rated at 4.83 and 4.67 respectively, should be interpreted with caution due to the low number of ratings (6 and 9).</li>
+<li>The average <strong>Order Rating</strong> for available cuisines ranges from 4.00 to 4.83.</li>
 </ul>
 <p><strong>Menu Cost</strong></p>
 <ul>
-<li>The average order cost across all cuisines is \$16.50, with the highest and lowest average costs for French (\$19.79) and Vietnamese (\$12.88), respectively.</li>
-<li>A notable portion of the orders (29.24%) exceeds \$20, indicating a willingness to pay for premium options or larger order sizes.</li>
-<li>Weekday orders tend to have more consistent and stable costs, while weekend orders show higher variability.</li>
-<li>On average, customers spend slightly more on weekends than on weekdays.</li>
-</ul>
-<p><strong>Delivery Time</strong></p>
-<ul>
-<li>The average delivery time on weekdays is 28.34 minutes, approximately 26.1% longer than on weekends, potentially due to higher traffic or reduced staffing.</li>
-<li>Average delivery times on weekends are significantly lower and more consistent than on weekdays for nearly all cuisine types, indicating more efficient weekend operations.</li>
-<li>10.54% of all orders take more than 60 minutes to get delivered from the time the order is placed.</li>
+<li>The <strong>Average Order Value (AOV)</strong> across all cuisines is \$16.50, indicating that customers typically make moderately priced purchases.</li>
+<li>French cuisine has the highest average order cost at \$19.79, while Vietnamese cuisine has the lowest at \$12.88.</li>
+<li>A significant portion of orders (29.24%) exceeds \$20, indicating potential demand and customer willingness to pay for premium options or larger order sizes.</li>
+<li>Order costs tend to be more consistent and stable on weekdays, while weekend see greater variability and slightly higher spending.</li>
 </ul>
 <p><strong>Restaurant Performance</strong></p>
 <ul>
-<li>The top 5 restaurants account for 33.4% of total orders, with Shake Shack leading at 11.5%.</li>
-<li>The top five restaurants by total orders align precisely with the top five in terms of total revenue generated.</li>
-<li>Nearly 80% of restaurants have fewer than 10 orders, and only 3.93% receive 50 or more orders.</li>
-<li>Only 8 restaurants, representing 3.9%, meet the criteria of having over 25 ratings and an average rating greater than 4. These selected restaurants maintain high average ratings, indicating strong customer satisfaction among popular establishments.</li>
+<li>The top 5 restaurants account for 33.4% of total orders, with Shake Shack leading at 11.5% and generating the highest <strong>Gross Merchandise Value (GMV)</strong> of \$3,579.53.</li>
+<li>Nearly 80% of restaurants have fewer than 10 orders, with only 3.93% receiving 50 or more orders, indicating a concentration of demand among a few establishments.</li>
+<li>Out of 178 restaurants, only 8 meet the criteria of having over 25 ratings and an average rating greater than 4, reflecting high customer satisfaction among a select group of popular venues.</li>
 </ul>
-<p><strong>Revenue</strong></p>
+<p><strong>Financial Metrics</strong></p>
 <ul>
-<li>Shake Shack is the top revenue generator with \$3,579.53.</li>
-<li>The total net revenue generated by the company from all orders amounts to \$6,166, driven by a commission on orders, which varies based on the cost of the order.</li>
+<li>The <strong>Gross Merchandise Value (GMV)</strong> totals \$31,314.82, indicating strong overall sales performance.</li>
+<li>The company applies a <strong>Commission Rate</strong> of 25% for orders exceeding \$20, 15% for orders between \$5 and \$20, and no charge for orders below \$5.</li>
+<li>This tiered take rate structure proves effective, contributing to a <strong>Total Revenue</strong> of \$6,166.40.</li>
+<li>After accounting for operating costs, the <strong>Net Revenue</strong> is \$4,008.44, indicating profitability.</li>
+<li>The <strong>Profit Margin</strong> is approximately 65%, reflecting robust financial health, with operational costs estimated at 35% of total revenue.</li>
 </ul>
 <p><strong>Operational Efficiency</strong></p>
 <ul>
-<li>The average food preparation time is 27.37 minutes, slightly higher on weekends.</li>
-<li>The average delivery time is 24.16 minutes, significantly faster on weekends.</li>
-<li>The average order completion time is 51.53 minutes, with 10.54% of orders taking over 60 minutes.</li>
-<li>Westville Hudson, Cafe Mogador, and Five Guys Burgers and Fries lead in operational efficiency with the shortest average order completion times.</li>
-<li>Parm, despite being one of the top 5 restaurants based on total orders, shows significantly longer average order completion, food preparation, and delivery times.</li>
+<li>The average <strong>Order Completion Time</strong> is 51.53 minutes, with 10.54% of orders taking over 60 minutes from placement to delivery.</li>
+<li><strong>Delivery Times</strong> on weekdays average 28.34 minutes, which is 26.1% longer than on weekends, likely due to increased traffic or reduced staffing. Weekend deliveries are faster and more consistent.</li>
+<li><strong>Order Completion Times</strong> on weekdays average 55.55 minutes, about 11% longer than on weekends, primarily due to extended delivery times, while <strong>Food Preparation Time</strong> remains stable throughout the week.</li>
+<li>Westville Hudson, Cafe Mogador, and Five Guys Burgers and Fries excel in operational efficiency with the shortest order completion times, whereas Parm, despite being a top restaurant by order volume, struggles with longer completion times.</li>
 </ul>
 <p><strong>Customer Satisfaction</strong></p>
 <ul>
-<li>Only 8 restaurants meet the criteria of having over 25 ratings and an average rating greater than 4, indicating strong customer satisfaction among popular establishments.</li>
-<li>A significant number of orders (38.78%) lacked a provided rating, which could affect the accuracy of customer satisfaction metrics.</li>
+<li>The <strong>Net Promoter Score (NPS)</strong> stands at 34.42%, indicating positive customer sentiment, though the high percentage of missing ratings could skew this interpretation depending on the tendencies of non-raters.</li>
+<li>The <strong>Customer Rating Participation Rate</strong> is 61.22%, leaving 38.78% of orders unrated. This indicates a need for targeted strategies to enhance customer engagement and loyalty, which are crucial for sustaining long-term growth.</li>
+<li>The <strong>Customer Retention Rate</strong> stands at 21.92%, indicating that just over one-fifth of customers return to place additional orders.</li>
 </ul>
 </div>
 </div>
@@ -13109,71 +13445,6 @@ memory usage: 148.4+ KB
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Business-Recommendations">Business Recommendations<a class="anchor-link" href="#Business-Recommendations">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>To enhance customer satisfaction and drive business growth, the following recommendations focus on optimizing key business metrics: customer retention, operational efficiency, service quality, order volume, and revenue maximization. These strategies aim to expand the customer base, increase engagement, and ensure long-term success in the competitive food delivery market.</p>
-<p><strong>Target Promotions and Rewards Programs</strong></p>
-<ul>
-<li><strong>Insight</strong>: Less than 1% of customers account for over 5% of orders, indicating a small group of highly active customers.</li>
-<li><strong>Strategy</strong>: Utilize data-driven insights on customer behavior and order patterns to develop loyalty programs and targeted marketing campaigns. Engage high-activity customers with incentives like discounts, exclusive offers, and early access to new features to drive repeat orders and higher spending. Run personalized promotions and engagement initiatives to attract and convert lower-activity customers.</li>
-<li><strong>Business Metric</strong>: Increase customer retention and average order value to drive revenue growth. Expand the customer base and boost overall engagement to increase order volume.</li>
-</ul>
-<p><strong>Improve Weekday Delivery Efficiency</strong></p>
-<ul>
-<li><strong>Insight</strong>: Delivery times on weekdays are 26.1% longer and more variable compared to weekends.</li>
-<li><strong>Strategy</strong>: Identify and address bottlenecks such as traffic congestion, staffing shortages, or inefficient route planning. Implement route optimization software, increase delivery personnel during peak hours, and improve restaurant preparation times to enhance efficiency.</li>
-<li><strong>Business Metric</strong>: Reduce average delivery times and improve customer satisfaction on weekdays to enhance overall service quality.</li>
-</ul>
-<p><strong>Enhance Weekend Operations</strong></p>
-<ul>
-<li><strong>Insight</strong>: Orders significantly increase over weekends (71.18%), with faster and more consistent delivery times.</li>
-<li><strong>Strategy</strong>: Optimize staffing and delivery logistics to handle peak weekend demand efficiently. Implement dynamic scheduling for delivery personnel to further reduce delivery times.</li>
-<li><strong>Business Metric</strong>: Maintain low delivery times and high customer satisfaction during weekends to support operational efficiency and customer loyalty.</li>
-</ul>
-<p><strong>Address Rating Gaps</strong></p>
-<ul>
-<li><strong>Insight</strong>: Almost 40% of orders lack a provided rating, potentially affecting customer satisfaction insights.</li>
-<li><strong>Strategy</strong>: Encourage customers to rate their orders through follow-up communication, pop-up prompts, push notifications, or dedicated sections. Offer small incentives like discounts or loyalty points for feedback to increase rating participation.</li>
-<li><strong>Business Metric</strong>: Increase the number of customer ratings to gain more accurate satisfaction data and improve service quality.</li>
-</ul>
-<p><strong>Leverage High-Performing Cuisines</strong></p>
-<ul>
-<li><strong>Insight</strong>: American, Japanese, and Italian cuisines dominate both weekdays and weekends, indicating strong customer preferences.</li>
-<li><strong>Strategy</strong>: Focus marketing efforts on these popular cuisines. Partner with high-performing restaurants to offer exclusive deals and promotions, boosting customer engagement and order volumes.</li>
-<li><strong>Business Metric</strong>: Increase order volumes and customer engagement to drive overall sales growth. Boost revenue by highlighting reliable and efficient restaurant partners.</li>
-</ul>
-<p><strong>Expand Revenue Opportunities</strong></p>
-<ul>
-<li><strong>Insight</strong>: The top 5 restaurants align precisely with the top 5 in revenue, with Shake Shack leading at \$3,579.53. Additionally, Parm, a high-order-volume restaurant, faces operational inefficiencies that impact overall service quality and revenue.</li>
-<li><strong>Strategy</strong>: Expand partnerships with top-performing restaurants to increase visibility and order volume. Explore additional revenue streams such as premium memberships, advertising, and exclusive delivery zones. Provide targeted support to streamline workflows and enhance operational efficiency.</li>
-<li><strong>Business Metric</strong>: Boost overall revenue and profitability through enhanced partnerships, diversified revenue streams, and improved operational efficiency for top-performing restaurants.</li>
-</ul>
-<p><strong>Restaurant Development</strong></p>
-<ul>
-<li><strong>Insight</strong>: Nearly 80% of restaurants have fewer than 10 orders, indicating many low-activity establishments.</li>
-<li><strong>Strategy</strong>: Provide support and guidance to low-activity restaurants on best practices for order fulfillment, customer service, and menu adaptations based on customer user patterns. Consider promotional partnerships to increase their visibility on the platform.</li>
-<li><strong>Business Metric</strong>: Increase order volume for low-activity restaurants to balance the platform’s activity and grow overall market presence.</li>
-</ul>
-<p><strong>Optimize Menu Pricing and Offerings</strong></p>
-<ul>
-<li><strong>Insight</strong>: A notable portion of orders (29.24%) exceeds \$20, indicating a willingness to pay for premium options.</li>
-<li><strong>Strategy</strong>: Analyze high-cost orders to identify popular premium offerings and replicate these strategies across other menu items. Introduce tiered pricing and bundled offers to maximize revenue.</li>
-<li><strong>Business Metric</strong>: Increase average order value and revenue to enhance overall financial performance.</li>
-</ul>
-<p><strong>Utilize Data-Driven Decision Making</strong></p>
-<ul>
-<li><strong>Insight</strong>: Consistent high ratings (4.0 - 5.0) across various metrics suggest other factors influencing customer satisfaction.</li>
-<li><strong>Strategy</strong>: Use data analytics to identify these factors and enhance the customer experience. Regularly review customer feedback and operational metrics to make informed service improvements.</li>
-<li><strong>Business Metric</strong>: Enhance overall customer satisfaction and service quality to drive long-term loyalty and growth.</li>
-</ul>
 </div>
 </div>
 </div>
