@@ -165,18 +165,18 @@ cd customer-demand-analysis
 
 #### 3. Create a Virtual Environment and Install the Required Dependencies
 
-Note: Python 3.6 or higher is required.
+Note: Python 3.11.6 or higher is required.
 
 Using `conda`:
 ```bash
-conda conda env create -f environment.yml
+conda env create -f environment.yml
 conda activate customer-demand-analysis-env
 ```
 
 Using `venv`:
 ```bash
-python3 -m venv env
-source env/bin/activate  # On Windows: .\env\Scripts\activate
+python3.11.6 -m venv customer-demand-analysis-env
+source customer-demand-analysis-env/bin/activate  # On Windows: .\customer-demand-analysis-env\Scripts\activate
 pip install -r requirements.txt
 ```
 ---
