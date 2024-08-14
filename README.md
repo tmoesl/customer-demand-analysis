@@ -1,4 +1,4 @@
-![FoodHub Banner](https://github.com/tmoesl/test/raw/main/customer_demand_analysis_banner.png)
+![FoodHub Banner](references/customer_demand_analysis_banner.png)
 
 # Customer Demand Analysis For Online Delivery App
 
@@ -137,8 +137,8 @@ The following recommendations are strategically designed to optimize key busines
 ├── environment.yml    <- Conda environment configuration with dependencies.
 │
 ├── data
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+│   ├── processed      <- The final, processed data sets for modeling.
+│   └── raw            <- The original, immutable data.
 │
 ├── notebooks          <- Jupyter notebooks for data exploration and analysis.
 │
