@@ -10302,7 +10302,9 @@ memory usage: 148.4+ KB
 <span class="n">total_orders</span> <span class="o">=</span> <span class="n">top_customers</span><span class="p">[</span><span class="s2">"count"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
 <span class="c1"># Calculate the cumulative percentage of orders</span>
-<span class="n">top_customers</span><span class="p">[</span><span class="s2">"cum_percentage"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">top_customers</span><span class="p">[</span><span class="s2">"cum_count"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_orders</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">top_customers</span><span class="p">[</span><span class="s2">"cum_percentage"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">top_customers</span><span class="p">[</span><span class="s2">"cum_count"</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_orders</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span>
+<span class="p">)</span>
 
 <span class="c1"># Find the top 5% of customers based on cumulative percentage</span>
 <span class="n">top_5_percent_customers</span> <span class="o">=</span> <span class="n">top_customers</span><span class="p">[</span><span class="n">top_customers</span><span class="p">[</span><span class="s2">"cum_percentage"</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">]</span>
@@ -10349,73 +10351,73 @@ memory usage: 148.4+ KB
 <th>0</th>
 <td>52832</td>
 <td>13</td>
-<td>0.684932</td>
+<td>0.68</td>
 </tr>
 <tr>
 <th>1</th>
 <td>47440</td>
 <td>10</td>
-<td>1.211802</td>
+<td>1.21</td>
 </tr>
 <tr>
 <th>2</th>
 <td>83287</td>
 <td>9</td>
-<td>1.685985</td>
+<td>1.69</td>
 </tr>
 <tr>
 <th>3</th>
 <td>250494</td>
 <td>8</td>
-<td>2.107482</td>
+<td>2.11</td>
 </tr>
 <tr>
 <th>4</th>
 <td>259341</td>
 <td>7</td>
-<td>2.476291</td>
+<td>2.48</td>
 </tr>
 <tr>
 <th>5</th>
 <td>82041</td>
 <td>7</td>
-<td>2.845100</td>
+<td>2.85</td>
 </tr>
 <tr>
 <th>6</th>
 <td>65009</td>
 <td>7</td>
-<td>3.213909</td>
+<td>3.21</td>
 </tr>
 <tr>
 <th>7</th>
 <td>276192</td>
 <td>7</td>
-<td>3.582719</td>
+<td>3.58</td>
 </tr>
 <tr>
 <th>8</th>
 <td>97079</td>
 <td>6</td>
-<td>3.898841</td>
+<td>3.90</td>
 </tr>
 <tr>
 <th>9</th>
 <td>97991</td>
 <td>6</td>
-<td>4.214963</td>
+<td>4.21</td>
 </tr>
 <tr>
 <th>10</th>
 <td>107909</td>
 <td>6</td>
-<td>4.531085</td>
+<td>4.53</td>
 </tr>
 <tr>
 <th>11</th>
 <td>275689</td>
 <td>6</td>
-<td>4.847208</td>
+<td>4.85</td>
 </tr>
 </tbody>
 </table>
@@ -10665,8 +10667,8 @@ memory usage: 148.4+ KB
 
 <span class="c1"># Aggregate total revenue, net revenue across all orders, and compute profit margin</span>
 <span class="n">total_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"total_revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">total_net_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"net_revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">profit_margin</span> <span class="o">=</span> <span class="n">total_net_rev</span> <span class="o">/</span> <span class="n">total_rev</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">net_rev</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"net_revenue"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">profit_margin</span> <span class="o">=</span> <span class="n">net_rev</span> <span class="o">/</span> <span class="n">total_rev</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="c1"># Convert to DataFrame</span>
 <span class="n">metrics_df</span> <span class="o">=</span> <span class="n">metrics_to_dataframe</span><span class="p">(</span>
@@ -10674,7 +10676,7 @@ memory usage: 148.4+ KB
     <span class="n">average_order_value</span><span class="o">=</span><span class="p">(</span><span class="n">aov</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
     <span class="n">order_volume</span><span class="o">=</span><span class="p">(</span><span class="n">ov</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">),</span>
     <span class="n">total_rev</span><span class="o">=</span><span class="p">(</span><span class="n">total_rev</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
-    <span class="n">total_net_rev</span><span class="o">=</span><span class="p">(</span><span class="n">total_net_rev</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
+    <span class="n">net_rev</span><span class="o">=</span><span class="p">(</span><span class="n">net_rev</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">$"</span><span class="p">),</span>
     <span class="n">profit_margin</span><span class="o">=</span><span class="p">(</span><span class="n">profit_margin</span><span class="p">,</span> <span class="s2">"%"</span><span class="p">),</span>
 <span class="p">)</span>
 
@@ -10742,7 +10744,7 @@ memory usage: 148.4+ KB
 </tr>
 <tr>
 <th>4</th>
-<td>total_net_rev</td>
+<td>net_rev</td>
 <td>\$</td>
 <td>3853.06</td>
 </tr>
@@ -10773,8 +10775,8 @@ memory usage: 148.4+ KB
 <li><strong>Average Order Value (AOV)</strong>: \$16.50, reflecting the typical spending per order, suggesting customers are making moderately priced purchases.</li>
 <li><strong>Order Volume</strong>: A total of 1,898 orders were processed.</li>
 <li><strong>Total Revenue</strong>: The company generated \$6,166.40 from all orders, demonstrating the effectiveness of the tiered take rate structure.</li>
-<li><strong>Net Revenue</strong>: After accounting for operating costs, the company’s net revenue is \$4,008.44, indicating profitability.</li>
-<li><strong>Profit Margin</strong>: With operational costs estimated at 35% of total revenue, the profit margin is approximately 65%, reflecting strong financial health.</li>
+<li><strong>Net Revenue</strong>: After accounting for operating costs, the company’s net revenue is \$3,853.06, indicating profitability.</li>
+<li><strong>Profit Margin</strong>: With operational costs estimated at 37.5% of total revenue, the profit margin is approximately 62.5%, reflecting strong financial health.</li>
 </ul>
 </div>
 </div>
@@ -12355,71 +12357,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_93e91_row4_col0, #T_93e91_row4_col1 {
+#T_6dbea_row4_col0, #T_6dbea_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_93e91_level0_row4 {
+#T_6dbea_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_93e91">
+<table id="T_6dbea">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_93e91_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_93e91_level0_col1">average_food_preparation_time</th>
+<th class="col_heading level0 col0" id="T_6dbea_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_6dbea_level0_col1">average_food_preparation_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_93e91_level0_row0">0</th>
-<td class="data row0 col0" id="T_93e91_row0_col0">Cafe Mogador</td>
-<td class="data row0 col1" id="T_93e91_row0_col1">25.28</td>
+<th class="row_heading level0 row0" id="T_6dbea_level0_row0">0</th>
+<td class="data row0 col0" id="T_6dbea_row0_col0">Cafe Mogador</td>
+<td class="data row0 col1" id="T_6dbea_row0_col1">25.28</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_93e91_level0_row1">1</th>
-<td class="data row1 col0" id="T_93e91_row1_col0">Five Guys Burgers and Fries</td>
-<td class="data row1 col1" id="T_93e91_row1_col1">25.62</td>
+<th class="row_heading level0 row1" id="T_6dbea_level0_row1">1</th>
+<td class="data row1 col0" id="T_6dbea_row1_col0">Five Guys Burgers and Fries</td>
+<td class="data row1 col1" id="T_6dbea_row1_col1">25.62</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_93e91_level0_row2">2</th>
-<td class="data row2 col0" id="T_93e91_row2_col0">Westville Hudson</td>
-<td class="data row2 col1" id="T_93e91_row2_col1">25.67</td>
+<th class="row_heading level0 row2" id="T_6dbea_level0_row2">2</th>
+<td class="data row2 col0" id="T_6dbea_row2_col0">Westville Hudson</td>
+<td class="data row2 col1" id="T_6dbea_row2_col1">25.67</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_93e91_level0_row3">3</th>
-<td class="data row3 col0" id="T_93e91_row3_col0">Chipotle Mexican Grill</td>
-<td class="data row3 col1" id="T_93e91_row3_col1">26.00</td>
+<th class="row_heading level0 row3" id="T_6dbea_level0_row3">3</th>
+<td class="data row3 col0" id="T_6dbea_row3_col0">Chipotle Mexican Grill</td>
+<td class="data row3 col1" id="T_6dbea_row3_col1">26.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_93e91_level0_row4">4</th>
-<td class="data row4 col0" id="T_93e91_row4_col0">The Smile</td>
-<td class="data row4 col1" id="T_93e91_row4_col1">26.11</td>
+<th class="row_heading level0 row4" id="T_6dbea_level0_row4">4</th>
+<td class="data row4 col0" id="T_6dbea_row4_col0">The Smile</td>
+<td class="data row4 col1" id="T_6dbea_row4_col1">26.11</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_93e91_level0_row5">35</th>
-<td class="data row5 col0" id="T_93e91_row5_col0">J. G. Melon</td>
-<td class="data row5 col1" id="T_93e91_row5_col1">28.47</td>
+<th class="row_heading level0 row5" id="T_6dbea_level0_row5">35</th>
+<td class="data row5 col0" id="T_6dbea_row5_col0">J. G. Melon</td>
+<td class="data row5 col1" id="T_6dbea_row5_col1">28.47</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_93e91_level0_row6">36</th>
-<td class="data row6 col0" id="T_93e91_row6_col0">Blue Ribbon Sushi Izakaya</td>
-<td class="data row6 col1" id="T_93e91_row6_col1">28.72</td>
+<th class="row_heading level0 row6" id="T_6dbea_level0_row6">36</th>
+<td class="data row6 col0" id="T_6dbea_row6_col0">Blue Ribbon Sushi Izakaya</td>
+<td class="data row6 col1" id="T_6dbea_row6_col1">28.72</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_93e91_level0_row7">37</th>
-<td class="data row7 col0" id="T_93e91_row7_col0">Otto Enoteca Pizzeria</td>
-<td class="data row7 col1" id="T_93e91_row7_col1">29.00</td>
+<th class="row_heading level0 row7" id="T_6dbea_level0_row7">37</th>
+<td class="data row7 col0" id="T_6dbea_row7_col0">Otto Enoteca Pizzeria</td>
+<td class="data row7 col1" id="T_6dbea_row7_col1">29.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_93e91_level0_row8">38</th>
-<td class="data row8 col0" id="T_93e91_row8_col0">Sushi Samba</td>
-<td class="data row8 col1" id="T_93e91_row8_col1">29.09</td>
+<th class="row_heading level0 row8" id="T_6dbea_level0_row8">38</th>
+<td class="data row8 col0" id="T_6dbea_row8_col0">Sushi Samba</td>
+<td class="data row8 col1" id="T_6dbea_row8_col1">29.09</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_93e91_level0_row9">39</th>
-<td class="data row9 col0" id="T_93e91_row9_col0">S'MAC</td>
-<td class="data row9 col1" id="T_93e91_row9_col1">29.42</td>
+<th class="row_heading level0 row9" id="T_6dbea_level0_row9">39</th>
+<td class="data row9 col0" id="T_6dbea_row9_col0">S'MAC</td>
+<td class="data row9 col1" id="T_6dbea_row9_col1">29.42</td>
 </tr>
 </tbody>
 </table>
@@ -12452,71 +12454,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_c817f_row4_col0, #T_c817f_row4_col1 {
+#T_3e716_row4_col0, #T_3e716_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_c817f_level0_row4 {
+#T_3e716_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_c817f">
+<table id="T_3e716">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_c817f_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_c817f_level0_col1">average_delivery_time</th>
+<th class="col_heading level0 col0" id="T_3e716_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_3e716_level0_col1">average_delivery_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_c817f_level0_row0">0</th>
-<td class="data row0 col0" id="T_c817f_row0_col0">Westville Hudson</td>
-<td class="data row0 col1" id="T_c817f_row0_col1">21.73</td>
+<th class="row_heading level0 row0" id="T_3e716_level0_row0">0</th>
+<td class="data row0 col0" id="T_3e716_row0_col0">Westville Hudson</td>
+<td class="data row0 col1" id="T_3e716_row0_col1">21.73</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_c817f_level0_row1">1</th>
-<td class="data row1 col0" id="T_c817f_row1_col0">Sushi of Gari</td>
-<td class="data row1 col1" id="T_c817f_row1_col1">21.94</td>
+<th class="row_heading level0 row1" id="T_3e716_level0_row1">1</th>
+<td class="data row1 col0" id="T_3e716_row1_col0">Sushi of Gari</td>
+<td class="data row1 col1" id="T_3e716_row1_col1">21.94</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_c817f_level0_row2">2</th>
-<td class="data row2 col0" id="T_c817f_row2_col0">Hill Country Fried Chicken</td>
-<td class="data row2 col1" id="T_c817f_row2_col1">22.64</td>
+<th class="row_heading level0 row2" id="T_3e716_level0_row2">2</th>
+<td class="data row2 col0" id="T_3e716_row2_col0">Hill Country Fried Chicken</td>
+<td class="data row2 col1" id="T_3e716_row2_col1">22.64</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_c817f_level0_row3">3</th>
-<td class="data row3 col0" id="T_c817f_row3_col0">Jack's Wife Freda</td>
-<td class="data row3 col1" id="T_c817f_row3_col1">22.72</td>
+<th class="row_heading level0 row3" id="T_3e716_level0_row3">3</th>
+<td class="data row3 col0" id="T_3e716_row3_col0">Jack's Wife Freda</td>
+<td class="data row3 col1" id="T_3e716_row3_col1">22.72</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_c817f_level0_row4">4</th>
-<td class="data row4 col0" id="T_c817f_row4_col0">Otto Enoteca Pizzeria</td>
-<td class="data row4 col1" id="T_c817f_row4_col1">22.92</td>
+<th class="row_heading level0 row4" id="T_3e716_level0_row4">4</th>
+<td class="data row4 col0" id="T_3e716_row4_col0">Otto Enoteca Pizzeria</td>
+<td class="data row4 col1" id="T_3e716_row4_col1">22.92</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_c817f_level0_row5">35</th>
-<td class="data row5 col0" id="T_c817f_row5_col0">J. G. Melon</td>
-<td class="data row5 col1" id="T_c817f_row5_col1">25.00</td>
+<th class="row_heading level0 row5" id="T_3e716_level0_row5">35</th>
+<td class="data row5 col0" id="T_3e716_row5_col0">J. G. Melon</td>
+<td class="data row5 col1" id="T_3e716_row5_col1">25.00</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_c817f_level0_row6">36</th>
-<td class="data row6 col0" id="T_c817f_row6_col0">Momoya</td>
-<td class="data row6 col1" id="T_c817f_row6_col1">25.13</td>
+<th class="row_heading level0 row6" id="T_3e716_level0_row6">36</th>
+<td class="data row6 col0" id="T_3e716_row6_col0">Momoya</td>
+<td class="data row6 col1" id="T_3e716_row6_col1">25.13</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_c817f_level0_row7">37</th>
-<td class="data row7 col0" id="T_c817f_row7_col0">Parm</td>
-<td class="data row7 col1" id="T_c817f_row7_col1">25.50</td>
+<th class="row_heading level0 row7" id="T_3e716_level0_row7">37</th>
+<td class="data row7 col0" id="T_3e716_row7_col0">Parm</td>
+<td class="data row7 col1" id="T_3e716_row7_col1">25.50</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_c817f_level0_row8">38</th>
-<td class="data row8 col0" id="T_c817f_row8_col0">Cafe Habana</td>
-<td class="data row8 col1" id="T_c817f_row8_col1">25.56</td>
+<th class="row_heading level0 row8" id="T_3e716_level0_row8">38</th>
+<td class="data row8 col0" id="T_3e716_row8_col0">Cafe Habana</td>
+<td class="data row8 col1" id="T_3e716_row8_col1">25.56</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_c817f_level0_row9">39</th>
-<td class="data row9 col0" id="T_c817f_row9_col0">Sushi of Gari 46</td>
-<td class="data row9 col1" id="T_c817f_row9_col1">25.97</td>
+<th class="row_heading level0 row9" id="T_3e716_level0_row9">39</th>
+<td class="data row9 col0" id="T_3e716_row9_col0">Sushi of Gari 46</td>
+<td class="data row9 col1" id="T_3e716_row9_col1">25.97</td>
 </tr>
 </tbody>
 </table>
@@ -12549,71 +12551,71 @@ memory usage: 148.4+ KB
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_c937c_row4_col0, #T_c937c_row4_col1 {
+#T_f37bb_row4_col0, #T_f37bb_row4_col1 {
   border-bottom: 0.5px solid grey;
 }
-#T_c937c_level0_row4 {
+#T_f37bb_level0_row4 {
   border-bottom: 0.5px solid grey;
 }
 </style>
-<table id="T_c937c">
+<table id="T_f37bb">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_c937c_level0_col0">restaurant_name</th>
-<th class="col_heading level0 col1" id="T_c937c_level0_col1">average_order_completion_time</th>
+<th class="col_heading level0 col0" id="T_f37bb_level0_col0">restaurant_name</th>
+<th class="col_heading level0 col1" id="T_f37bb_level0_col1">average_order_completion_time</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_c937c_level0_row0">0</th>
-<td class="data row0 col0" id="T_c937c_row0_col0">Westville Hudson</td>
-<td class="data row0 col1" id="T_c937c_row0_col1">47.40</td>
+<th class="row_heading level0 row0" id="T_f37bb_level0_row0">0</th>
+<td class="data row0 col0" id="T_f37bb_row0_col0">Westville Hudson</td>
+<td class="data row0 col1" id="T_f37bb_row0_col1">47.40</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_c937c_level0_row1">1</th>
-<td class="data row1 col0" id="T_c937c_row1_col0">Cafe Mogador</td>
-<td class="data row1 col1" id="T_c937c_row1_col1">48.22</td>
+<th class="row_heading level0 row1" id="T_f37bb_level0_row1">1</th>
+<td class="data row1 col0" id="T_f37bb_row1_col0">Cafe Mogador</td>
+<td class="data row1 col1" id="T_f37bb_row1_col1">48.22</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_c937c_level0_row2">2</th>
-<td class="data row2 col0" id="T_c937c_row2_col0">Five Guys Burgers and Fries</td>
-<td class="data row2 col1" id="T_c937c_row2_col1">49.03</td>
+<th class="row_heading level0 row2" id="T_f37bb_level0_row2">2</th>
+<td class="data row2 col0" id="T_f37bb_row2_col0">Five Guys Burgers and Fries</td>
+<td class="data row2 col1" id="T_f37bb_row2_col1">49.03</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_c937c_level0_row3">3</th>
-<td class="data row3 col0" id="T_c937c_row3_col0">Blue Ribbon Sushi Bar &amp; Grill</td>
-<td class="data row3 col1" id="T_c937c_row3_col1">49.70</td>
+<th class="row_heading level0 row3" id="T_f37bb_level0_row3">3</th>
+<td class="data row3 col0" id="T_f37bb_row3_col0">Blue Ribbon Sushi Bar &amp; Grill</td>
+<td class="data row3 col1" id="T_f37bb_row3_col1">49.70</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_c937c_level0_row4">4</th>
-<td class="data row4 col0" id="T_c937c_row4_col0">Chipotle Mexican Grill</td>
-<td class="data row4 col1" id="T_c937c_row4_col1">49.87</td>
+<th class="row_heading level0 row4" id="T_f37bb_level0_row4">4</th>
+<td class="data row4 col0" id="T_f37bb_row4_col0">Chipotle Mexican Grill</td>
+<td class="data row4 col1" id="T_f37bb_row4_col1">49.87</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_c937c_level0_row5">35</th>
-<td class="data row5 col0" id="T_c937c_row5_col0">Parm</td>
-<td class="data row5 col1" id="T_c937c_row5_col1">52.81</td>
+<th class="row_heading level0 row5" id="T_f37bb_level0_row5">35</th>
+<td class="data row5 col0" id="T_f37bb_row5_col0">Parm</td>
+<td class="data row5 col1" id="T_f37bb_row5_col1">52.81</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_c937c_level0_row6">36</th>
-<td class="data row6 col0" id="T_c937c_row6_col0">J. G. Melon</td>
-<td class="data row6 col1" id="T_c937c_row6_col1">53.47</td>
+<th class="row_heading level0 row6" id="T_f37bb_level0_row6">36</th>
+<td class="data row6 col0" id="T_f37bb_row6_col0">J. G. Melon</td>
+<td class="data row6 col1" id="T_f37bb_row6_col1">53.47</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_c937c_level0_row7">37</th>
-<td class="data row7 col0" id="T_c937c_row7_col0">Sushi of Gari 46</td>
-<td class="data row7 col1" id="T_c937c_row7_col1">53.51</td>
+<th class="row_heading level0 row7" id="T_f37bb_level0_row7">37</th>
+<td class="data row7 col0" id="T_f37bb_row7_col0">Sushi of Gari 46</td>
+<td class="data row7 col1" id="T_f37bb_row7_col1">53.51</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_c937c_level0_row8">38</th>
-<td class="data row8 col0" id="T_c937c_row8_col0">Sushi Samba</td>
-<td class="data row8 col1" id="T_c937c_row8_col1">53.73</td>
+<th class="row_heading level0 row8" id="T_f37bb_level0_row8">38</th>
+<td class="data row8 col0" id="T_f37bb_row8_col0">Sushi Samba</td>
+<td class="data row8 col1" id="T_f37bb_row8_col1">53.73</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_c937c_level0_row9">39</th>
-<td class="data row9 col0" id="T_c937c_row9_col0">S'MAC</td>
-<td class="data row9 col1" id="T_c937c_row9_col1">54.17</td>
+<th class="row_heading level0 row9" id="T_f37bb_level0_row9">39</th>
+<td class="data row9 col0" id="T_f37bb_row9_col0">S'MAC</td>
+<td class="data row9 col1" id="T_f37bb_row9_col1">54.17</td>
 </tr>
 </tbody>
 </table>
@@ -13418,8 +13420,8 @@ memory usage: 148.4+ KB
 <li>The <strong>Gross Merchandise Value (GMV)</strong> totals \$31,314.82, indicating strong overall sales performance.</li>
 <li>The company applies a <strong>Commission Rate</strong> of 25% for orders exceeding \$20, 15% for orders between \$5 and \$20, and no charge for orders below \$5.</li>
 <li>This tiered take rate structure proves effective, contributing to a <strong>Total Revenue</strong> of \$6,166.40.</li>
-<li>After accounting for operating costs, the <strong>Net Revenue</strong> is \$4,008.44, indicating profitability.</li>
-<li>The <strong>Profit Margin</strong> is approximately 65%, reflecting robust financial health, with operational costs estimated at 35% of total revenue.</li>
+<li>After accounting for operating costs, the <strong>Net Revenue</strong> is \$3,853.06, indicating profitability.</li>
+<li>The <strong>Profit Margin</strong> is approximately 62.5%, reflecting robust financial health, with operational costs estimated at 37.5% of total revenue.</li>
 </ul>
 <p><strong>Operational Efficiency</strong></p>
 <ul>
@@ -13455,7 +13457,61 @@ memory usage: 148.4+ KB
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>To drive financial growth, operational efficiency, and customer satisfaction, the following recommendations target key business metrics. These strategies aim to expand the customer base, boost engagement, and ensure long-term success in the competitive food delivery market.</p>
+<p>To drive financial growth, operational efficiency, and customer satisfaction, the following recommendations target key business metrics. These strategies aim to expand the customer base, boost engagement, drive revenue growth, and ensure long-term success in the competitive food delivery market.</p>
+<p><strong>Target Promotions and Rewards Programs</strong></p>
+<ul>
+<li><strong>Insight:</strong> A small, highly active group of customers, less than 1%, accounts for over 5% of total orders, highlighting their disproportionate influence on order volume.</li>
+<li><strong>Strategy:</strong> Leverage data-driven insights to develop targeted loyalty programs and marketing campaigns to expand the customer base. Offer incentives such as discounts, exclusive offers, and early access to new features for high-activity customers to drive repeat orders and higher spending. Implement personalized promotions to engage and convert lower-activity customers, and encourage referrals by offering rewards for customers who bring in new users.</li>
+<li><strong>Business Metrics:</strong>  This strategy is expected to improve <strong>Customer Retention, New Customer Acquisition</strong>, and <strong>Customer</strong> <strong>Conversion</strong>, contributing to <strong>Revenue Growth</strong>.</li>
+</ul>
+<p><strong>Improve Weekday Delivery Efficiency</strong></p>
+<ul>
+<li><strong>Insight:</strong> Delivery times on weekdays are 26.1% longer and more variable compared to weekends, likely due to increased traffic or reduced staffing.</li>
+<li><strong>Strategy:</strong> Address bottlenecks such as traffic congestion, staffing shortages, or inefficient route planning by implementing route optimization software, increasing peak-hour staffing, and enhance restaurant preparation times.</li>
+<li><strong>Business Metrics:</strong> This strategy aims to optimize <strong>Driver Utilization</strong> and <strong>Average Delivery Distance</strong>, leading to reduced <strong>Delivery Times</strong> and <strong>Cost per Delivery</strong>.</li>
+</ul>
+<p><strong>Enhance Weekend Operations</strong></p>
+<ul>
+<li><strong>Insight</strong>: Order volume significantly increase over weekends, accounting for 71.18%, indicating higher demand during leisure periods.</li>
+<li><strong>Strategy</strong>: Optimize staffing and delivery logistics to handle peak weekend demand efficiently. Implement dynamic scheduling for delivery personnel to accommodate higher order volumes.</li>
+<li><strong>Business Metrics</strong>: This strategy prioritizes maintaining operational efficiency by optimizing <strong>Order Completion Times</strong> and <strong>Driver Utilization</strong> during peak order volume periods, while proactively preparing operations to manage and scale with future growth.</li>
+</ul>
+<p><strong>Address Rating Gaps</strong></p>
+<ul>
+<li><strong>Insight</strong>: Nearly 40% of the rating scores are missing, potentially affecting the accuracy of customer satisfaction metrics and insights.</li>
+<li><strong>Strategy:</strong> Encourage customers to rate their orders by implementing follow-up communication, push notifications, and dedicated app prompts. Offer small incentives like discounts or loyalty points to increase feedback participation.</li>
+<li><strong>Business Metrics</strong>: This strategy aims to increase the <strong>Customer Rating Participation Rate</strong>, thereby improving the accuracy of the <strong>Net Promoter Score (NPS)</strong> and providing better insights for service enhancement.</li>
+</ul>
+<p><strong>Leverage High-Performing Cuisines</strong></p>
+<ul>
+<li><strong>Insight:</strong> American, Japanese, and Italian cuisines dominate, accounting for over 70% of orders on both weekends and weekdays, underscoring strong customer preferences.</li>
+<li><strong>Strategy:</strong> Focus marketing efforts on these popular cuisines by partnering with high-performing restaurants to offer exclusive deals and promotions. Consider introducing new menu items or limited-time offers to capitalize on established customer preferences and increase engagement.</li>
+<li><strong>Business Metrics:</strong> This strategy aims to boost <strong>Order Volume</strong> and <strong>Customer Retention</strong>, contributing to overall <strong>Revenue Growth</strong>.</li>
+</ul>
+<p><strong>Expand Revenue Opportunities</strong></p>
+<ul>
+<li><strong>Insight:</strong> The top 5 restaurants account for 33.4% of total orders, with Shake Shack leading at 11.5% These top-performing establishments align precisely with the highest revenue generators, indicating strong performance and customer loyalty.</li>
+<li><strong>Strategy:</strong> Expand partnerships with top-performing restaurants to further increase visibility and order volume. Explore additional revenue streams such as premium memberships, targeted advertising, and exclusive delivery zones to maximize earnings.</li>
+<li><strong>Business Metrics:</strong> This strategy aims to increase <strong>GMV, Revenue Growth</strong> and <strong>Order Volume</strong> while expanding <strong>Profit Margins</strong> through diversified revenue streams.</li>
+</ul>
+<p><strong>Restaurant Development</strong></p>
+<ul>
+<li><strong>Insight:</strong> Nearly 80% of restaurants have fewer than 10 orders, indicating many low-activity establishments that struggle to attract customers.</li>
+<li><strong>Strategy:</strong> Provide tailored support to low-activity restaurants by offering guidance on best practices for order fulfillment, customer service, and menu optimization to better align with customer preferences. Establish promotional partnerships to enhance their visibility and attract more orders. Focus on initiatives that encourage repeat business and build customer loyalty.</li>
+<li><strong>Business Metrics:</strong> This strategy drives platform growth by boosting <strong>New Customer Acquisition</strong>, <strong>Customer Retention</strong>, and <strong>Order Volume</strong> for low-activity restaurants, while also balancing platform activity and expanding market presence.</li>
+</ul>
+<p><strong>Optimize Menu Pricing and Offerings</strong></p>
+<ul>
+<li><strong>Insight</strong>: A significant portion of orders (29.24%) exceeds \$20, indicating potential demand and customer willingness to pay for premium options or larger order sizes.</li>
+<li><strong>Strategy</strong>: Analyze high-cost orders to identify popular premium offerings and replicate these strategies across other menu items. Implement tiered pricing and bundled offers to maximize revenue, while segmenting customers to tailor promotions. Monitor customer feedback to ensure these strategies do not negatively impact satisfaction or retention.</li>
+<li><strong>Business Metrics:</strong> This strategy increases <strong>Average Order Value (AOV)</strong> and <strong>Revenue</strong> to enhance overall financial performance, while maintaining positive customer satisfaction and retention.</li>
+</ul>
+<p><strong>Explore Additional Metrics for Market Expansion</strong></p>
+<ul>
+<li><strong>Insight:</strong> While current metrics provide valuable information, additional data is needed to fully optimize performance across key areas.</li>
+<li><strong>Strategy</strong>: Focus on collecting and analyzing additional data, particularly in areas like geographical coverage, customer base, customer satisfaction, and operational efficiency to refine business strategies and accelerate market expansion.</li>
+<li><strong>Business Metrics:</strong> This strategy aims to enhance <strong>Active User Growth</strong>, reduce <strong>Customer Churn</strong> and <strong>Cost Per Acquisition (CPA)</strong>, optimize <strong>Order Accuracy and Fulfillment</strong>, and increase <strong>Market Share</strong> to support sustainable <strong>Revenue Growth</strong> through targeted market expansion efforts.</li>
+</ul>
 </div>
 </div>
 </div>
