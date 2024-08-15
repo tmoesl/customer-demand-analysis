@@ -12,6 +12,7 @@
 - [Data Insights](#data-insights)
 - [Business Recommendations](#business-recommendations)
 - [Repository Structure](#repository-structure)
+- [Requirements](#requirements)
 - [Installation](#installation)
 
 ## Introduction
@@ -129,7 +130,7 @@ The following recommendations are strategically designed to optimize key busines
 
 
 ## Repository Structure
-```w
+```
 ├── LICENSE            <- Project's open-source license details.
 ├── README.md          <- Top-level README for developers.
 │
@@ -149,6 +150,10 @@ The following recommendations are strategically designed to optimize key busines
 │
 ├── src                <- Source code for the project.
 ```
+
+## Requirements
+
+Python 3.11.6 or higher is required. The latest version of Python can be downloaded from the official website [python.org](https://www.python.org).
 
 ## Installation
 
@@ -178,5 +183,14 @@ Using `venv`:
 python3.11.6 -m venv customer-demand-analysis-env
 source customer-demand-analysis-env/bin/activate  # On Windows: .\customer-demand-analysis-env\Scripts\activate
 pip install -r requirements.txt
+```
+
+#### 4. Set up the Environment Variables
+- Create a `.env` file in the project root directory.
+- Add the following variables to the file:
+
+```
+PYTHONPATH=../src
+DATA_DIR=../data/raw
 ```
 ---
