@@ -36,7 +36,7 @@ dependencies:
   - libbrotlidec=1.1.0=hb547adb_1
   - libbrotlienc=1.1.0=hb547adb_1
   - libcblas=3.9.0=23_osxarm64_openblas
-  - libcxx=18.1.8=h5a72898_3
+  - libcxx=18.1.8=h5a72898_4
   - libdeflate=1.21=h99b78c6_0
   - libedit=3.1.20191231=hc8eb9b7_2
   - libexpat=2.6.2=hebf3989_0
@@ -82,6 +82,7 @@ dependencies:
   - pyparsing=3.1.2=pyhd8ed1ab_0
   - python=3.12.3=h4a7b5fc_0_cpython
   - python-dateutil=2.9.0=pyhd8ed1ab_0
+  - python-dotenv=1.0.1=pyhd8ed1ab_0
   - python-tzdata=2024.1=pyhd8ed1ab_0
   - python_abi=3.12=4_cp312
   - pytz=2024.1=pyhd8ed1ab_0
