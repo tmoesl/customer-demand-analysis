@@ -153,7 +153,7 @@ The following recommendations are strategically designed to optimize key busines
 
 ## Requirements
 
-Python 3.11.6 or higher is required. The latest version of Python can be downloaded from the official website [python.org](https://www.python.org).
+`Python 3.11.6` or higher is required. Download the latest version here: [python.org](https://www.python.org)
 
 ## Installation
 
@@ -169,8 +169,6 @@ cd customer-demand-analysis
 ```
 
 #### 3. Create a Virtual Environment and Install the Required Dependencies
-
-Note: Python 3.11.6 or higher is required.
 
 Using `conda`:
 ```bash
