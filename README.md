@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Objective](#objective)
 - [Key Business Metrics](#key-business-metrics)
 - [Exploratory Data Analysis and Visualization](#exploratory-data-analysis-and-visualization)
 - [Data Insights](#data-insights)
@@ -17,9 +18,11 @@
 
 ## Introduction
 
-The Customer Demand Analysis project involves a comprehensive exploratory data analysis (EDA) of sample data from an online food ordering and delivery app used by New York restaurants. The primary objective is to uncover key business metrics that will optimize operations, enhance customer satisfaction, and drive sustainable long-term growth. 
+The Customer Demand Analysis project involves an exploratory data analysis (EDA) of sample data from an online food ordering and delivery app used by New York restaurants. In a competitive food delivery market, data-driven insights are vital for optimizing operations, enhancing customer satisfaction, and achieving sustainable long-term growth.
 
-Through data-driven insights, this project demonstrates the transformation of raw data into strategic business metrics, providing actionable recommendations that align with business goals and long-term success.
+## Objective
+
+This project aims to transform raw data into strategic metrics, offering actionable recommendations that align with business objectives. By identifying these key metrics, the analysis provides a foundation for enhancing platform performance and customer loyalty.
 
 ## Key Business Metrics
 
@@ -31,9 +34,9 @@ Through data-driven insights, this project demonstrates the transformation of ra
 6. **Order Volume**: The total number of orders placed on the platform, reflecting demand and platform usage.
 7. **Order Completion Time**: The average time taken from order placement to delivery, indicating the platform’s operational efficiency.
 8. **Delivery Times**: The average time taken for orders to be delivered, indicating the platform’s delivery efficiency.
-9. **Customer Retention Rate**: The percentage of customers who return to place additional orders, indicating customer loyalty.
+9. **Customer Retention Rate (CRR)**: The percentage of customers who return to place additional orders, indicating customer loyalty.
 10. **Net Promoter Score (NPS)**: A measure of customer satisfaction based on their likelihood to recommend the service, reflecting overall customer sentiment.
-11. **Customer Rating Participation Rate**: The percentage of orders that receive customer ratings, indicating engagement and feedback quality.
+11. **Customer Rating Participation Rate (CRPR)**: The percentage of orders that receive customer ratings, indicating engagement and feedback quality.
 
 ## Exploratory Data Analysis and Visualization
 
@@ -59,7 +62,7 @@ These insights, supported by key metrics, offer a comprehensive evaluation of pe
    - Average **Order Ratings** for these cuisines range from 4.30 to 4.37, with Spanish and Thai cuisines rated higher but based on fewer reviews.
 
 3. **Menu Cost**
-   - The **Average Order Value (AOV)** is \$16.50, reflecting typical spending on moderately priced purchases.
+   - The **AOV** is \$16.50, reflecting typical spending on moderately priced purchases.
    - 29.24% of orders exceed \$20, showing a significant demand for premium or larger-sized orders.
 
 4. **Restaurant Performance**
@@ -67,7 +70,7 @@ These insights, supported by key metrics, offer a comprehensive evaluation of pe
    - Nearly 80% of restaurants have fewer than 10 orders, indicating concentrated demand among a few venues.
 
 5. **Financial Metrics**
-   - The **Gross Merchandise Value (GMV)** totals \$31,314.82, highlighting strong overall sales performance.
+   - The **GMV** totals \$31,314.82, highlighting strong overall sales performance.
    - The **Profit Margin** is robust at 62.5%, with **Net Revenue** after costs standing at \$3,853.06.
 
 6. **Operational Efficiency**
@@ -75,9 +78,10 @@ These insights, supported by key metrics, offer a comprehensive evaluation of pe
    - Weekday **Delivery Times** are 26.1% longer than weekend deliveries, likely due to increased traffic and reduced staffing.
 
 7. **Customer Satisfaction**
-   - The **Net Promoter Score (NPS)** is 34.42%, indicating generally positive customer sentiment.
-   - The **Customer Retention Rate** is 21.92%, with a **Customer Rating Participation Rate** of 61.22%, leaving a significant portion of orders unrated.
+   - The **NPS** is 34.42%, indicating generally positive customer sentiment.
+   - The **CRR** is 21.92%, with a **CRPR** of 61.22%, leaving a significant portion of orders unrated.
 
+***Note**: The current dataset lacks timestamped information, limiting the ability to analyze changes over time in key business areas.*
 
 ## Business Recommendations
 
@@ -101,7 +105,7 @@ The following recommendations are strategically designed to optimize key busines
 4. **Address Rating Gaps**
    - **Insight**: Nearly 40% of rating scores are missing, affecting customer satisfaction metrics.
    - **Strategy**: Encourage customer feedback through follow-up prompts, push notifications and incentives.
-   - **Business Metrics**: Customer Rating Participation Rate, Net Promoter Score (NPS).
+   - **Business Metrics**: CRPR, NPS.
 
 5. **Leverage High-Performing Cuisines**
    - **Insight**: American, Japanese, and Italian cuisines dominate orders on both weekends and weekdays, reflecting strong customer preferences.
@@ -111,7 +115,7 @@ The following recommendations are strategically designed to optimize key busines
 6. **Expand Revenue Opportunities**
    - **Insight**: Top-performing restaurants generate a significant portion of total orders and revenue.
    - **Strategy**: Expand partnerships with these restaurants and explore new revenue streams like premium memberships and targeted advertising.
-   - **Business Metrics**: Gross Merchandise Value, Revenue Growth, Order Volume, Profit Margin.
+   - **Business Metrics**: GMV, Revenue Growth, Order Volume, Profit Margin.
 
 7. **Restaurant Development**
    - **Insight**: Most restaurants have fewer than 10 orders, struggling to attract customers.
@@ -121,11 +125,11 @@ The following recommendations are strategically designed to optimize key busines
 8. **Optimize Menu Pricing and Offerings**
    - **Insight**: A significant portion of orders exceeds \$20, showing a demand for premium options.
    - **Strategy**: Implement tiered pricing and bundled offers, while monitoring customer satisfaction.
-   - **Business Metrics**: Average Order Value, Revenue Growth, Customer Retention.
+   - **Business Metrics**: AOV, Revenue Growth, Customer Retention.
 
-9. **Explore Additional Metrics for Market Expansion**
-   - **Insight**: Additional data is needed to optimize performance across key business areas.
-   - **Strategy**: Collect and analyze new data to refine business strategies and accelerate market expansion.
+9. **Enhance Data Collection for Time-Based Analysis**
+   - **Insight**: Lack of timestamped data limits tracking performance changes over time.
+   - **Strategy**: Collect timestamped data to monitor trends, seasonality, and assess strategic initiatives, enabling refined business strategies and market expansion.
    - **Business Metrics**: Active User Growth, Customer Churn, Cost Per Acquisition (CPA), Order Accuracy and Fulfillment, Market Share.
 
 
