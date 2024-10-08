@@ -182,7 +182,7 @@ conda activate customer-demand-analysis-env
 
 Using `venv`:
 ```bash
-python3.11.6 -m venv customer-demand-analysis-env
+python3.12.3 -m venv customer-demand-analysis-env
 source customer-demand-analysis-env/bin/activate  # On Windows: .\customer-demand-analysis-env\Scripts\activate
 pip install -r requirements.txt
 ```
