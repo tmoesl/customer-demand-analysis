@@ -3,6 +3,8 @@
 # Customer Demand Analysis For Online Delivery App
 
 ![Status](https://img.shields.io/badge/-Completed-34A853?style=flat&label=Project&labelColor=23555555)
+![Languages](https://img.shields.io/github/languages/count/tmoesl/customer-demand-analysis?label=Languages)
+![Top Language](https://img.shields.io/github/languages/top/tmoesl/customer-demand-analysis?color=white)
 
 ## Executive Summary
 
